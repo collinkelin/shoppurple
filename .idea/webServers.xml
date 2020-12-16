@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="a490b2ae-b415-47bb-9b1e-5b2e7a3891f5" name="开发服-shoppurple">
+        <fileTransfer accessType="SFTP" host="47.242.63.49" port="22" sshConfigId="165b0fea-6f5d-40ff-b63c-acae554cef89" sshConfig="root@47.242.63.49:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
