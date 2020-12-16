@@ -1,0 +1,25 @@
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">上线层级</label>
+            <div class="layui-input-block">
+                <input type="number" name="level" required value="4" placeholder="上线层级" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">分成比例</label>
+            <div class="layui-input-block">
+                <input type="number" name="divide" required value="5000" placeholder="分成比例" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-close>取消</button>
+        <input type="hidden" name="_csrf_" value="{:systoken('admin/users/add')}">
+    </div>
+    <script>
+    window.form.render();
+    </script>
+</form>

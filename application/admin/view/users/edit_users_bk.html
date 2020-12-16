@@ -1,0 +1,54 @@
+{notempty name='bk_info'}
+{volist name='bk_info' id='vo'}
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label">开户人</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="请输入开户人" value="{$vo.name}" class="layui-input">
+                <input type="hidden" name="_csrf_" value="{:systoken('admin/users/edit_users_bk')}">
+                <input type="hidden" name="id" value="{$vo.id}">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">银行名</label>
+            <div class="layui-input-block">
+                <input name="bank_name" required value="{$vo.bank_name}" placeholder="请输入开户银行" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">支行</label>
+            <div class="layui-input-block">
+                <input name="branch_name" required value="{$vo.branch_name}" placeholder="请输入开户银行" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">支行编号</label>
+            <div class="layui-input-block">
+                <input name="branch_number" required value="{$vo.branch_number}" placeholder="请输入开户银行" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">卡号</label>
+            <div class="layui-input-block">
+                <input name="card_number" required value="{$vo.card_number}" placeholder="请输入开户银行" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">开户电话</label>
+            <div class="layui-input-block">
+                <input name="tel" required value="{$vo.tel}" placeholder="请输入手机号码" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-close>取消</button>
+    </div>
+    <script>
+    window.form.render();
+    </script>
+</form>
+{/volist}
+{/notempty}

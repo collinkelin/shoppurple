@@ -1,0 +1,52 @@
+{extend name='admin@main'}
+{block name="content"}
+<form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body think-box-shadow padding-left-40">
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">银行名</span>
+                <input name="bank_name" class="layui-input" placeholder="请输入银行名" value="{$info.bank_name}" readonly>
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">支行名</span>
+                <input name="branch_name" class="layui-input" placeholder="请输入支行名" value="{$info.branch_name}" readonly>
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">支行编号</span>
+                <input name="branch_number" class="layui-input" placeholder="请输入支行编号" value="{$info.branch_number}" readonly>
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">银行卡号</span>
+                <input name="card_number" required class="layui-input" placeholder="请输入银行卡号" value="{$info.card_number}" readonly>
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">姓名</span>
+                <input name="name_e" class="layui-input" placeholder="请输入姓名" value="{$info.name_e}" readonly>
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">姓名汉字</span>
+                <input name="name" class="layui-input" placeholder="请输入姓名汉字" value="{$info.name}" readonly>
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">电话号码</span>
+                <input name="phone" class="layui-input" placeholder="请输入电话号码" value="{$info.phone}" readonly>
+            </label>
+        </div>
+    </div>
+</form>
+<script>
+    window.form.render();
+</script>
+{/block}

@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0">
+    <title>{:lang('Support')}</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/res/common/css/hui.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/userstyle.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/base.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/user.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <style>
+        #frame_full {
+            width: 100%;
+            height: calc(100vh - 1.8rem);
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>{:lang('Support')}</span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section class="container">
+        <iframe id="frame_full" frameborder="0" scrolling="auto" src="{$info.url}">
+        </iframe>
+    </section>
+</body>
+
+</html>

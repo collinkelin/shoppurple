@@ -1,0 +1,402 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{:lang('Personal Center')}</title>
+    <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="__ROOT__/res/common/css/hui.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__ROOT__/public/css/style.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__ROOT__/statics/css/userstyle.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="__ROOT__/static/plugs/layui/layui.all.js"></script>
+    <script src="__ROOT__/static/plugs/require/require.js"></script>
+    <!-- <script src="__ROOT__/static/admin.js__VER__"></script> -->
+    <script src="/index/script/admin"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <style type="text/css">
+    body {
+        font-size: 13px
+    }
+
+    .aui-palace a {
+        margin-bottom: 2rem;
+    }
+
+    .aui-take-head {
+        height: 170px
+    }
+
+    .wrap-flex-row {
+        display: flex;
+        display: -webkit-flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .mytool .openvip {
+        position: relative;
+        width: 48%;
+        background: #fcd66b;
+        background: linear-gradient(90deg, #ffe8bf, #fcd66b);
+        color: #bf9955;
+        border-radius: 0.3rem;
+        margin: 17px 0;
+    }
+
+    .mytool .text {
+        height: 5rem;
+        line-height: 5rem;
+        font-size: 0.8rem;
+        z-index: 999;
+    }
+
+    .mytool .text span {
+        font-size: 1.2rem;
+    }
+
+    .mytool .sharefriend {
+        position: relative;
+        width: 48%;
+        background: #fcd66b;
+        background: linear-gradient(90deg, #cddcff, #5f97fc);
+        color: #5a92d1;
+        border-radius: 0.3rem;
+        margin: 17px 0;
+    }
+
+    .mytool .corner {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        height: 3rem;
+        width: auto;
+    }
+
+    .aui-flex-three {
+        padding: 1.0rem;
+        margin-bottom: 0
+    }
+
+    * {
+        font-size: 12px
+    }
+
+    .aui-palace-grid-text h2 {
+        font-size: 12px
+    }
+
+    .aui-take-button button {
+        font-size: 12px;
+        padding: 5px 10px
+    }
+
+    .aui-palace-grid {
+        width: 25%
+    }
+
+    .user_index_top .usermes {
+        width: 92%;
+        border-top: 17px solid #f4f4f4;
+        background: #fff;
+        padding: 16px 0;
+        margin: 0px auto;
+        top: 1rem;
+        border-radius: 1rem;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }
+
+    .user_index_top .usermes .button {
+        margin-top: 10px;
+    }
+
+    .user_index_top .usermes .u-data-g {
+        color: #999;
+    }
+
+    .user_index_top .usermes .mesBox {
+        text-align: center;
+    }
+
+    .user_index_top .usermes .mesBox .num {
+        font-size: 16px;
+        color: #666;
+    }
+
+    .user_index_top .usermes .mesBox a {
+        /* padding: 0 5px; */
+        width: 120px;
+        text-align: center;
+        line-height: 1.8rem;
+        color: #fff;
+        border-radius: 1rem;
+        border: 1px #fff solid;
+        background: #7552e6;
+        display: inline-block;
+    }
+
+    .user_index_top .text {
+        color: #000
+    }
+
+    .center {
+        text-align: center;
+    }
+
+    .aui-flex-box span {
+        display: flex;
+        align-items: center;
+    }
+
+    .aui-flex-box span .fa {
+        margin-right: 7px;
+        font-size: 20px;
+        height: auto;
+        color: #fff;
+    }
+
+    .aui-palace-grid-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .aui-palace-grid-icon .fa {
+        font-size: 27px;
+        height: auto;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+        <span>{:lang('My')}</span>
+    </header>
+    <section class="aui-scrollView" style="padding-bottom: 30px;">
+        <div class="aui-take-head">
+            <div class="aui-flex aui-flex-one">
+                <div class="aui-take-user">
+                    <img src="{$info.headpic}" alt="" onerror="this.src='__ROOT__/public/img/head.png'">
+                </div>
+                <div class="aui-flex-box" style="height: 55px;">
+                    <span style="margin-top: 0;">
+                        {eq name="info.is_mobile" value="1"}<i class="fa fa-mobile" aria-hidden="true"></i>{else/}<i class="fa fa-envelope-o" aria-hidden="true"></i>{/eq}{$info.username}
+                    </span>
+                </div>
+                <div class="aui-take-button my_data" style="height: 55px;">
+                    <button data-copy="{$info.invite_code}" class="level level2" style="margin-top: 27px;"><i class="fa fa-database" style="color: #FED630;font-size: 16px;margin-right: 3px;" aria-hidden="true"></i>{:lang('Invitation code')}:{$info.invite_code}</button>
+                </div>
+            </div>
+            <div class="aui-flex aui-flex-two">
+                <div class="aui-flex-box">
+                    <h3>
+                        <span>
+                            <img src="__PUBLIC__/statics/img/8.png">
+                            {$level['name']}
+                        </span>
+                    </h3>
+                </div>
+                <a href="/index/ctrl/vip.html" style="display:block">
+                    <div class="aui-go-button">
+                        <button style="font-size: 12px">{:lang('Enable now')}</button>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="user_index_top " style="background: -webkit-linear-gradient(left,#27a6fa,#8e71f5);margin-top: -1px">
+            <div class="usermes">
+                <div class="wrap-flex-row">
+                    <div class="mesBox">
+                        <div class="text">{$sell_y_num|formatNumber}</div>
+                        <div class="num">{:lang('Profit')}</div>
+                    </div>
+                    <span class="u-data-g">|</span>
+                    <div class="mesBox">
+                        <div class="text">{$info.balance|formatNumber}</div>
+                        <div class="num">{:lang('Balance')}</div>
+                    </div>
+                    <span class="u-data-g">|</span>
+                    <div class="mesBox">
+                        <div class="text">{$info.freeze_balance|formatNumber}</div>
+                        <div class="num">{:lang('Freeze')}</div>
+                    </div>
+                </div>
+                <div class="button wrap-flex-row">
+                    <div class="mesBox goto">
+                        <a href="{:url('recharge/recharge_before')}">{:lang('Recharge')}</a>
+                    </div>
+                    <div class="mesBox goto">
+                        <a href="{:url('ctrl/deposit_before')}">{:lang('Withdraw')}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-take-item" style="background: none;margin:0 0.25rem">
+            <div class="mytool wrap-flex-row">
+                <!-- <a class="openvip goto" href="{:url('ctrl/junior')}">
+                    <div class="text wrap-flex-column center" style="background: url(/statics/img/vip-jb.png) right bottom no-repeat;background-size: 2.5rem;">{:lang('My team, lying down also benefits')}</div>
+                </a> -->
+                <a class="openvip goto" href="{:url('ctrl/helps')}">
+                    <div class="text wrap-flex-column center" style="background: url(/statics/img/vip-jb.png) right bottom no-repeat;background-size: 2.5rem;">{:lang('Help center')}</div>
+                </a>
+                <a class="sharefriend goto" href="{:url('my/invite')}">
+                    <div class="text wrap-flex-column center" style="background: url(/statics/img/yq-jb.png) right bottom no-repeat;background-size: 3rem;">{:lang('Invite friends and earn money together')}</div>
+                </a>
+            </div>
+        </div>
+        <div class="aui-take-item" style="margin-top: 0">
+            <div class="aui-flex">
+                <div class="aui-flex-box">
+                    <h1>{:lang('Common functions')}</h1>
+                </div>
+            </div>
+            <div class="aui-palace">
+                <?php
+                if($info['show_td']){
+                ?>
+                <a href="{:url('ctrl/junior2')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="__ROOT__/public/img/zs.png" alt="">
+                        <!-- <i class="fa fa-mobile" aria-hidden="true"></i> -->
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('My team')}</h2>
+                    </div>
+                </a>
+                <?php
+                }
+                ?>
+                <a href="{:url('ctrl/wallet')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="__ROOT__/public/img/qb.png" alt="">
+                        <!-- <i class="fa fa-mobile" aria-hidden="true"></i> -->
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('My Wallet')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/my_data')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="__ROOT__/public/img/gr.png" alt="">
+                        <!-- <i class="fa fa-mobile" aria-hidden="true"></i> -->
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Profile')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('recharge/recharge_admin')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="__ROOT__/public/img/cz.png" alt="">
+                        <!-- <i class="fa fa-mobile" aria-hidden="true"></i> -->
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Recharge Management')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/deposit_admin')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <img src="__ROOT__/public/img/tx.png" alt="">
+                        <!-- <i class="fa fa-mobile" aria-hidden="true"></i> -->
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Withdraw record')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/team_bgk')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <i class="fa fa-users" aria-hidden="true" style="color: #D52A1A;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Team commission')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/receive_site')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon">
+                        <i class="fa fa-map-marker" aria-hidden="true" style="color: #FF841B;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Address Management')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/bank')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon" style="padding-top:5px;">
+                        <i class="fa fa-credit-card-alt" aria-hidden="true" style="color: #9A0B98;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Bank card binding')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/edit_pwd')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon" style="padding-top:5px;">
+                        <i class="fa fa-lock" aria-hidden="true" style="color: #7AAA60;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('change Password')}</h2>
+                    </div>
+                </a>
+                <a href="{:url('ctrl/edit_deposit_pwd')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon" style="padding-top:5px;">
+                        <i class="fa fa-lock" aria-hidden="true" style="color: #9A0B98;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('transaction password')}</h2>
+                    </div>
+                </a>
+                <!-- <a href="{:url('my/bind_tel')}" class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon" style="padding-top:5px;">
+                        <i class="fa fa-mobile" aria-hidden="true" style="color: #E94F50;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('Mobile phone binding')}</h2>
+                    </div>
+                </a> -->
+                <!-- <a class="aui-palace-grid">
+                    <div class="aui-palace-grid-icon" style="padding-top:5px;">
+                        <i class="fa fa-trash" aria-hidden="true" style="color: #28B6BB;"></i>
+                    </div>
+                    <div class="aui-palace-grid-text">
+                        <h2>{:lang('clear cache')}</h2>
+                    </div>
+                </a> -->
+                <a href="javascript:void(0)" id="exit" class="aui-palace-grid" style="width: 80%;margin-left:10%;text-align: center;
+                border:1px solid red;background: #fc486d;-webkit-border-radius:5px ;-moz-border-radius:5px ;border-radius: 5px;">
+                    <div class="aui-palace-grid-icon" style="display: inline-block;">
+                        <img src="__ROOT__/public/img/tc.png" alt="">
+                    </div>
+                    <div class="aui-palace-grid-text" style="display: inline-block;position: relative;top: -6px;color:#fff">
+                        <h2 style="color: #fff">{:lang('Exit')}</h2>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    {include file="public/floor" /}
+    <script>
+    $(function() {
+        $('#hui-footer a').eq(3).addClass("floor-active")
+    })
+
+    $("#exit").click(function() {
+        layer.open({
+            title: '',
+            content: `{:lang('Are you sure you want to log out')}`,
+            btn: [`{:lang('confirm')}`, `{:lang('cancel')}`],
+            shadeClose: false,
+            yes: function(index) {
+                location.href = "{:url('user/logout')}"
+            },
+            no: function() {
+                layer.close();
+            }
+        });
+    })
+    </script>
+</body>
+
+</html>

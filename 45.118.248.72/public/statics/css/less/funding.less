@@ -1,0 +1,530 @@
+@color_1: #999;
+@color_2: #46adfc;
+@color_3: #666;
+@color_4: #aaa;
+@color_5: #333;
+@color_6: #555;
+@color_7: #fff;
+@color_8: #d4d4d4;
+@color_9: #ff7b94;
+@color_10: #18c481;
+@color_11: #111;
+@color_12: #f80;
+
+@charset "utf-8";
+/* CSS Document */
+/**********数字资产子栏目**********/
+/**********众筹**********/
+/**************************/
+/******页面内容主体******/
+/******众筹进度******/
+/*------主体------*/
+/*------图标------*/
+/******众筹列表******/
+/*------主体------*/
+/*------上半部分：基本信息------*/
+/*------中间部分：数据------*/
+/*------下半部分------*/
+/*------不同状态的列表------*/
+/******众筹记录******/
+/*------主体------*/
+/*------标题：时间/状态------*/
+/*------订单内容------*/
+/*------订单总价------*/
+/*------订单操作------*/
+/******众筹记录详情******/
+/*------主体------*/
+/*------详情------*/
+/**********V宝中心**********/
+/**************************/
+/******V宝主体******/
+/******V宝账户信息******/
+/*------主体------*/
+/*------昨日收益------*/
+/*------可用资产------*/
+/******V宝账户记录******/
+/*------记录列表------*/
+/*------转入/转出按钮------*/
+.funding-container {
+	padding: 4.8rem 0 1.6rem 0;
+	position: relative;
+}
+.funding-title {
+	width: 100%;
+	background: #fff;
+	overflow: hidden;
+	position: fixed;
+	left: 0;
+	top: 1.76rem;
+	z-index: 999;
+	li {
+		width: 33.333333%;
+		text-align: center;
+		overflow: hidden;
+		float: left;
+		a {
+			width: 100%;
+			border-right: #eee 1px solid;
+			overflow: hidden;
+			display: block;
+			padding: .3rem;
+		}
+		&:last-child {
+			a {
+				border-right: none;
+			}
+		}
+		i {
+			display: block;
+			margin: 0 auto;
+			width: 1.2rem;
+			height: 1.2rem;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: .94rem auto;
+		}
+		span {
+			display: block;
+			margin: 0 auto;
+			font-size: .52rem;
+			color: @color_1;
+		}
+		a.active {
+			span {
+				color: @color_2;
+			}
+		}
+		.funding-progress-1 {
+			i {
+				background-image: url(../images/icon_time_1.png);
+			}
+		}
+		.funding-progress-2 {
+			i {
+				background-image: url(../images/icon_time_2.png);
+			}
+		}
+		.funding-progress-3 {
+			i {
+				background-image: url(../images/icon_time_3.png);
+			}
+		}
+	}
+}
+.funding-list {
+	width: 100%;
+	background: #fff;
+	overflow: hidden;
+	padding: .5rem;
+	.funding-list-info {
+		width: 100%;
+		min-height: 2.5rem;
+		border-bottom: #f1f1f1 1px solid;
+		overflow: hidden;
+		padding: 0 3rem .5rem 2.5rem;
+		position: relative;
+		.funding-list-logo {
+			width: 2rem;
+			height: 2rem;
+			border-radius: .2rem;
+			overflow: hidden;
+			position: absolute;
+			left: 0;
+			top: 0;
+			img {
+				width: 100%;
+			}
+		}
+		h1 {
+			font-size: .56rem;
+		}
+		p {
+			font-size: .45rem;
+			color: @color_3;
+			padding-top: .1rem;
+			b {
+				font-weight: normal;
+				color: @color_4;
+			}
+		}
+		h3 {
+			font-size: .5rem;
+			color: @color_4;
+			padding-top: .15rem;
+			b {
+				font-weight: normal;
+				color: @color_5;
+			}
+		}
+	}
+	.funding-list-time {
+		position: absolute;
+		right: 0;
+		top: 0;
+		span {
+			font-size: .56rem;
+			background-repeat: no-repeat;
+			background-position: 0 .15rem;
+			background-size: .6rem;
+			display: block;
+			position: relative;
+			padding: 0 0 0 .8rem;
+		}
+	}
+	.funding-list-details {
+		width: auto;
+		overflow: hidden;
+		padding: .3rem 0;
+		li {
+			width: 33.3333333%;
+			text-align: center;
+			overflow: hidden;
+			float: left;
+			&:first-child {
+				text-align: left;
+			}
+			&:last-child {
+				text-align: right;
+			}
+		}
+		span {
+			font-size: .5rem;
+			color: @color_4;
+		}
+		h3 {
+			font-size: .54rem;
+			color: @color_6;
+		}
+	}
+	.funding-list-bottom {
+		width: 100%;
+		overflow: hidden;
+		padding: .2rem 0 0 0;
+		.funding-list-progress {
+			overflow: hidden;
+			padding: .2rem 0 0 0;
+			float: left;
+		}
+		.funding-list-btn {
+			float: right;
+			button {
+				height: 1rem;
+				font-size: .52rem;
+				color: @color_7;
+				background: #ffcb18;
+				border-radius: .15rem;
+				padding: 0 .3rem;
+				&:disabled {
+					color: @color_8;
+					background: #e6e6e6;
+				}
+			}
+		}
+	}
+}
+.progress-bar {
+	width: 8.5rem;
+	height: .32rem;
+	background: #e5e5e5;
+	border-radius: .16rem;
+	float: left;
+	margin: .14rem 0;
+	span {
+		height: 100%;
+		background: -webkit-linear-gradient(left, #14eedc, #45acfb);
+		border-radius: .16rem;
+		display: block;
+	}
+}
+.progress-bar-tips {
+	line-height: .6rem;
+	font-size: .48rem;
+	color: @color_6;
+	float: left;
+	padding: 0 .3rem;
+}
+.funding-comingsoon {
+	.funding-list-time {
+		span {
+			color: @color_9;
+			background-image: url(../images/icon_status_1.png);
+		}
+	}
+}
+.funding-ongoing {
+	.funding-list-time {
+		span {
+			color: @color_10;
+			background-image: url(../images/icon_status_2.png);
+		}
+	}
+}
+.funding-finish {
+	.funding-list-time {
+		span {
+			color: @color_1;
+			background-image: url(../images/icon_status_3.png);
+		}
+	}
+}
+.funding-record {
+	width: 100%;
+	background: #fff;
+	border-bottom: #f1f1f1 1px solid;
+	overflow: hidden;
+}
+.funding-record-title {
+	width: 100%;
+	border-bottom: #eee 1px solid;
+	overflow: hidden;
+	padding: .3rem .5rem;
+	span {
+		font-size: .52rem;
+		color: @color_1;
+		display: block;
+	}
+	span.funding-record-status {
+		color: @color_2;
+	}
+}
+.funding-record-info {
+	width: 100%;
+	a {
+		width: 100%;
+		min-height: 3.6rem;
+		overflow: hidden;
+		display: block;
+		padding: .6rem .5rem .6rem 3rem;
+		position: relative;
+	}
+	.funding-record-photo {
+		width: 2rem;
+		height: 2rem;
+		border-radius: .2rem;
+		overflow: hidden;
+		position: absolute;
+		left: .5rem;
+		top: .6rem;
+		img {
+			width: 100%;
+		}
+	}
+	.funding-record-content {
+		width: 6rem;
+		h3 {
+			font-size: .56rem;
+			color: @color_5;
+			padding-bottom: .3rem;
+		}
+		p {
+			font-size: .5rem;
+			color: @color_1;
+		}
+	}
+	.funding-record-number {
+		text-align: right;
+		position: absolute;
+		right: .5rem;
+		top: 1rem;
+		h1 {
+			font-size: .68rem;
+			color: @color_11;
+		}
+		span {
+			font-size: .45rem;
+			color: @color_4;
+			display: block;
+		}
+	}
+}
+.funding-record-operate {
+	width: 100%;
+	border-top: #eee 1px solid;
+	overflow: hidden;
+	padding: .2rem .5rem;
+	li {
+		float: right;
+		a {
+			height: 1.1rem;
+			line-height: 1.1rem;
+			font-size: .52rem;
+			color: @color_1;
+			border: #ddd 1px solid;
+			border-radius: .55rem;
+			display: block;
+			float: left;
+			margin-left: .3rem;
+			padding: 0 .6rem;
+		}
+		a.active {
+			color: @color_5;
+		}
+	}
+}
+.funding-record-name {
+	width: 100%;
+	background: url(../img/user_bg.png) no-repeat center top;
+	background-size: cover;
+	overflow: hidden;
+	padding: .5rem 0 0 0;
+	.funding-record-photo {
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: .2rem;
+		overflow: hidden;
+		margin: 0 auto;
+		img {
+			width: 100%;
+		}
+	}
+	h3 {
+		font-size: .56rem;
+		color: @color_7;
+		text-align: center;
+		overflow: hidden;
+		padding: .5rem;
+	}
+}
+.funding-record-details {
+	width: 100%;
+	background: #fff;
+	overflow: hidden;
+	h3 {
+		font-size: .6rem;
+		color: @color_2;
+		padding: .4rem .5rem;
+	}
+	li {
+		width: 100%;
+		font-size: .56rem;
+		border-bottom: #f1f1f1 1px solid;
+		overflow: hidden;
+		padding: .4rem .5rem;
+		display: table;
+		position: relative;
+	}
+	label {
+		width: 4rem;
+		color: @color_4;
+		display: table-cell;
+	}
+	span {
+		color: @color_5;
+		display: table-cell;
+	}
+	span.funding-record-status {
+		color: @color_2;
+	}
+	span.funding-record-price {
+		font-size: .7rem;
+		color: @color_12;
+	}
+	.funding-list-progress {
+		position: absolute;
+		right: .5rem;
+		top: .4rem;
+	}
+	.progress-bar {
+		width: 5rem;
+		span {
+			display: block;
+		}
+	}
+}
+.vpay-container {
+	padding: 0 0 1.6rem 0;
+}
+.vpay-account {
+	width: 100%;
+	background: url(../img/user_bg.png) no-repeat center top;
+	background-size: 100% 100%;
+	overflow: hidden;
+	.vpay-account-balance {
+		text-align: center;
+		color: @color_7;
+		overflow: hidden;
+		padding: 1rem;
+		span {
+			font-size: .5rem;
+			display: block;
+		}
+		h1 {
+			font-size: 1.2rem;
+			padding: .2rem;
+		}
+	}
+	.vpay-account-details {
+		width: 100%;
+		overflow: hidden;
+		li {
+			width: 50%;
+			float: left;
+			position: relative;
+			&:first-child {
+				&:after {
+					width: 1px;
+					height: .8rem;
+					content: '';
+					background: rgba(255, 255, 255, .3);
+					position: absolute;
+					right: 0;
+					top: .9rem;
+				}
+			}
+			a {
+				width: 100%;
+				color: @color_7;
+				text-align: center;
+				background: rgba(255, 255, 255, .1);
+				display: block;
+				overflow: hidden;
+				padding: .4rem 0;
+			}
+			span {
+				font-size: .5rem;
+				display: block;
+			}
+			h3 {
+				font-size: .72rem;
+			}
+		}
+	}
+}
+.vpay-record {
+	width: 100%;
+	overflow: hidden;
+	.tab-title {
+		position: relative;
+		left: auto;
+		top: auto;
+	}
+}
+.vpay-list {
+	margin-top: .08rem;
+}
+.vpay-toolbar {
+	// width: 100%;
+	position: fixed;
+	max-width: 750px;
+	margin: auto;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	z-index: 999;
+	a {
+		width: 50%;
+		height: 1.6rem;
+		line-height: 1.6rem;
+		font-size: .56rem;
+		text-align: center;
+		color: @color_7;
+		display: block;
+		float: left;
+		&:first-child {
+			background: #46a9fd;
+		}
+		&:last-child {
+			background: #ffba00;
+		}
+	}
+}

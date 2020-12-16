@@ -1,0 +1,40 @@
+<form onsubmit="return false" data-auto="true" action="{:url()}" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body padding-left-40">
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">用户数</span>
+                <input type="number" name="index_users" required placeholder="" value="{:sysconf('index_users')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">商品数</span>
+                <input type="number" name="index_goods" required placeholder="" value="{:sysconf('index_goods')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">金额数</span>
+                <input type="number" name="index_price" required placeholder="" value="{:sysconf('index_price')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">抢单数</span>
+                <input type="number" name="index_num" required placeholder="" value="{:sysconf('index_num')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">保存配置</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+        </div>
+    </div>
+</form>
+<script>
+window.form.render();
+</script>

@@ -1,0 +1,59 @@
+{extend name='admin@main'}
+{block name="content"}
+<div class="think-box-shadow">
+    <a class="layui-btn layui-btn layui-btn" data-open="{:url('help_add',['id'=>0])}" data-value="id#0" style='background:green;'>新增</a>
+    <table class="layui-table margin-top-15" lay-skin="line">
+        {notempty name='list'}
+        <thead>
+            <tr>
+                <th class='text-left nowrap'>ID</th>
+                <th class='text-left nowrap'>标题</th>
+                <th class='text-left nowrap'>url</th>
+                <th class='text-left nowrap'>内容</th>
+                <th class='text-left nowrap'>排序</th>
+                {if auth("help_edit")}
+                <th class='text-left nowrap'>操作</th>
+                {/if}
+            </tr>
+        </thead>
+        {/notempty}
+        <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td class='text-left nowrap'>{$vo.id}</td>
+                <td class='text-left nowrap'>{$vo.title}</td>
+                <td class='text-left nowrap'>{$vo.url}</td>
+                <td class='text-left nowrap'>{$vo.content}</td>
+                <td class='text-left nowrap'>{$vo.sort}</td>
+                <td class='text-left nowrap'>
+                    {if auth("help_edit")}
+                    <a class="layui-btn layui-btn-xs layui-btn" data-open="{:url('help_edit',['id'=>$vo.id])}" data-value="id#{$vo.id}" style='background:green;'>编辑</a>
+                    <a class="layui-btn layui-btn-xs layui-btn" onClick="data_delete({$vo.id})" style='background:red;'>删除</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+<script>
+function data_delete(id) {
+    layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" }, function(index) {
+        $.ajax({
+            type: 'POST',
+            url: "{:url('help_del')}",
+            data: {
+                'id': id,
+            },
+            beforeSend: function(request) {
+                request.setRequestHeader("User-Token-Csrf", "{:systoken('admin/help/help_del')}");
+            },
+            success: function(res) {
+                layer.msg(res.info, { time: 2500 });
+                location.reload();
+            }
+        });
+    }, function() {});
+}
+</script>
+{/block}

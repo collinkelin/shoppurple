@@ -1,0 +1,116 @@
+{notempty name='info'}
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off" lay-filter="form">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label">等级名称</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="等级名称" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">会员等级(请勿修改)</label>
+            <div class="layui-input-block">
+                <input type="number" name="level" required placeholder="请输入开户银行" class="layui-input" readonly>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">升级价格</label>
+            <div class="layui-input-block">
+                <input type="number" name="num" required placeholder="请输入升级价格" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">接单限制</label>
+            <div class="layui-input-block">
+                <input type="number" name="order_num" required placeholder="请输入接单限制" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">佣金比例</label>
+            <div class="layui-input-block">
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[commission_min]" placeholder="最小佣金比例" autocomplete="off" class="layui-input" required>
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[commission_max]" placeholder="最大佣金比例" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid layui-word-aux">只输入第一个(或第二个输入0)为固定佣金比例，两个都输入为区间佣金比例</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">匹配额度</label>
+            <div class="layui-input-block">
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[match_min]" placeholder="最小金额" autocomplete="off" class="layui-input" required>
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[match_max]" placeholder="最大金额" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">余额比例区间/定额区间</div>
+                <div class="layui-input-inline">
+                    <input type="radio" name="extended[match_proportion]" value="0" title="定额" />
+                    <input type="radio" name="extended[match_proportion]" value="1" title="比例" />
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">提现限制</label>
+            <div class="layui-input-block">
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[withdraw_min]" placeholder="最小金额" autocomplete="off" class="layui-input" required>
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[withdraw_max]" placeholder="最大金额" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-mid">次数</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[withdraw_num]" placeholder="次数" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">升级条件</label>
+            <div class="layui-input-block">
+                <div class="layui-form-mid">邀请人数</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[member_num]" placeholder="邀请人数" autocomplete="off" class="layui-input" required>
+                </div>
+                <div class="layui-form-mid">每成员额度</div>
+                <div class="layui-input-inline" style="width: 100px;">
+                    <input type="number" name="extended[member_money]" placeholder="每成员额度" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">用户余额限制</label>
+            <div class="layui-input-block">
+                <input type="number" name="num_min" required placeholder="用户余额限制" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text block">
+            <label class="layui-form-label label-required">说明信息</label>
+            <div class="layui-input-block">
+                <textarea  placeholder="请输入相应语言内容" class="layui-textarea" name="directions">{$info.directions}</textarea>
+                <div class="layui-form-mid layui-word-aux">%s or %n$s:(n:数字) 不可更改,可变更位置</div>
+            </div>
+        </div>
+    </div>
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <input type="hidden" name="_csrf_" value="{:systoken('admin/users/add_level')}">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-close>取消</button>
+    </div>
+    <script>
+    info = {:json_encode($info)};
+    for (var o in info.extended) {
+        info['extended[' + o + ']'] = info.extended[o]
+    }
+    window.form.val("form", info);
+    window.form.render();
+    </script>
+</form>
+{/notempty}

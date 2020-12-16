@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>{:lang('order details')}</title>
+    <link rel="stylesheet" href="__ROOT__/public/css/style.min.css__VER__">
+    <link rel="stylesheet" href="__ROOT__/public/css/ui.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__NPM__/chlayer@3.1.5/dist/mobile/need/layer.css">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="__ROOT__/public/js/ui.js__VER__"></script>
+    <script src="__NPM__/chlayer@3.1.5/dist/mobile/layer.js"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <style>
+    .container>div {
+        padding: .5rem 1rem;
+    }
+
+    .site {
+        border-bottom: .3rem solid rgb(248, 242, 242);
+    }
+
+    .site>div:first-child {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        margin-bottom: .5rem;
+    }
+
+    .site>div:last-child {
+        position: relative;
+    }
+
+    .site>div:last-child::after {
+        content: "";
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        right: 0;
+        background-image: url(__ROOT__/public/img/right.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .location {
+        width: 75%;
+        display: inline-block;
+    }
+
+    .order {
+        font-size: .5rem;
+        border-bottom: .3rem solid rgb(248, 242, 242);
+    }
+
+    .order_info {
+        margin-top: .5rem;
+        display: flex;
+    }
+
+    .info_img {
+        width: 3rem;
+        height: 3rem;
+        background: #eeeeee;
+    }
+
+    .info_data {
+        max-width: 55%;
+        margin: 0 0 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .info_store,
+    .money {
+        color: #FDC003;
+    }
+
+    .info_money {
+        margin-left: auto;
+        text-align: right;
+    }
+
+    .data_cont {
+        border-bottom: .3rem solid rgb(248, 242, 242);
+        text-align: right;
+    }
+
+    .data_cont>p {
+        margin-bottom: .2rem;
+    }
+
+    .container>p {
+        border-bottom: .1rem solid rgb(248, 242, 242);
+        text-align: right;
+        padding: .3rem 1rem;
+    }
+
+    .data_cont>p span:last-child {
+        color: #FDC003;
+        margin-left: .1rem;
+    }
+
+    .btn {
+        margin: 1.2rem 1rem;
+        height: 2.2rem;
+        line-height: 2.2rem;
+        border-radius: 5px;
+        background: #FDC003;
+        text-align: center;
+        color: white;
+        padding: 0 !important;
+    }
+
+    .input-radiu {
+        width: 70%;
+        border: 1px solid #b9adad;
+        border-radius: 50px;
+        margin: auto;
+        height: 1.5rem;
+    }
+
+    .input-radiu input {
+        border: none;
+        outline: none;
+        background: transparent;
+        height: 100%;
+        text-align: center;
+        color: #777777;
+    }
+
+    #container {
+        display: flex;
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .confirm {
+        margin: auto;
+        background: white;
+        width: 90%;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .box {
+        padding: 50px 30px;
+        line-height: 22px;
+        text-align: center;
+    }
+
+    .btn-cont {
+        width: 100%;
+        height: 50px;
+        line-height: 50px;
+        border-top: 1px solid #D0D0D0;
+        background-color: #F2F2F2;
+        display: flex;
+    }
+
+    .btn-cont>div {
+        width: 50%;
+        text-align: center;
+        font-size: .7rem;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>{:lang('order details')}</span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section>
+        <div class="container">
+            <div class="site">
+                <div>
+                    <p>{:lang('Consignee name')}:<span class="user">{$info.name}</span></p>
+                    <p class="tel">{$info.tel}</p>
+                </div>
+                <div>{:lang('Shipping address')}: <span class="location">{$info.address}</span></div>
+            </div>
+            <div class="order">
+                <div class="order_num">{$info.oid}</div>
+                <div class="order_info">
+                    <div class="info_img">
+                        <img src="{$info.goods_pic}" alt="">
+                    </div>
+                    <div class="info_data">
+                        <p class="info_name">{$info.goods_name}</p>
+                        <p class="info_store">{$info.shop_name}</p>
+                    </div>
+                    <div class="info_money">
+                        <p class="money" style="margin-bottom: .5rem;">{:lang('symbol')}{$info.goods_price}</p>
+                        <p>x<span class="info_num">{$info.goods_count}</span></p>
+                    </div>
+                </div>
+            </div>
+            <p><span class="data_title">{:lang('Your available balance')}:</span><span class="usable_num">{:lang('symbol')}{$info.balance}</span></p>
+            <div class="data_cont">
+                <p><span class="data_title">{:lang('order amount')}:</span><span class="data_money">{:lang('symbol')}{$info.num}</span></p>
+                <p><span class="data_title">{:lang('Commission')}:</span><span class="brokerage">{:lang('symbol')}{$info.commission}</span></p>
+                <p><span class="data_title">{:lang('Estimated return')}:</span><span class="return">{:lang('symbol')}{:round(($info.num+$info.commission)*100)/100}</span></p>
+                {neq name="info.special" value="0" }
+                <p><span class="data_title">{:lang('Paid')}:</span><span class="paid">{:lang('symbol')}{$info.paid}</span></p>
+                <p><span class="data_title">{:lang('Still need to pay')}:</span><span class="difference">{:lang('symbol')}{$info.difference}</span></p>
+                {/neq}
+            </div>
+            {eq name="info.status" value="0" }
+            <div class="btn btn-submit">{:lang('Submit orders')}</div>
+            {eq name="match.cancel" value="1" }
+            <div class="btn btn-cancel">{:lang('Cancel order')}</div>
+            {/eq}
+            {/eq}
+        </div>
+    </section>
+</body>
+<script>
+var oid = "{$info.oid}", // order ID
+    add_id = "{$info.add_id}",
+    submit = true;
+
+$(".site").click(function() {
+    location.href = `{:url('ctrl/receive_site')}`
+})
+
+var zhujiTime = "{:config('deal_zhuji_time')}";
+var shopTime = "{:config('deal_shop_time')}";
+zhujiTime = zhujiTime * 1000;
+shopTime = shopTime * 1000;
+
+$(".btn-submit").click(function() {
+    var status = $(this).data('status');
+    console.log(status);
+    var i = 0;
+    layer.open({
+        type: 2,
+        content: `{:lang('Order submission')}`,
+        time: zhujiTime,
+        shadeClose: false,
+    });
+    var timer = setInterval(function() {
+        i++;
+        if (i == 1) {
+            layer.open({
+                type: 2,
+                content: `{:lang('Remote host is being assigned')}`,
+                time: zhujiTime,
+                shadeClose: false,
+            })
+        } else if (i == 2) {
+            layer.open({
+                type: 2,
+                content: `{:lang('Waiting for a response from the merchant system')}`,
+                time: shopTime,
+                shadeClose: false,
+            })
+
+            var ajaxT = setTimeout(function() {
+                $.ajax({
+                    url: `{:url('order/do_order')}`,
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { oid: oid, add_id: add_id, status: 1 },
+                    success: function(res) {
+                        console.log(res)
+                        if (res.code == 0) {
+                            QS_toast.show(`{:lang('Orders submitted successfully')}`, true);
+                            clearInterval(timer)
+                            var linkTime = setTimeout(function() {
+                                location.href = res.url
+                            }, 1800);
+                        } else {
+                            if (res.code == 5) {
+                                layer.open({
+                                    // anim: 'up',
+                                    content: res.info,
+                                    btn: [`{:lang('confirm')}`, `{:lang('cancel')}`],
+                                    shadeClose: false,
+                                    yes: function(index) {
+                                        if (res.url)
+                                            location.href = res.url
+                                        layer.closeAll();
+                                    },
+                                    no: function() {
+                                        layer.closeAll();
+                                    }
+                                });
+                            } else {
+                                QS_toast.show(res.info, true);
+                                if (res.url) {
+                                    var linkTime = setTimeout(function() {
+                                        location.href = res.url
+                                    }, 1800);
+                                } else {
+                                    var timer = setInterval(function() {
+                                        location.href = location.href
+                                    }, 3000);
+                                }
+                            }
+                        }
+                        sumbit = true;
+                    },
+                    error: function(err) {
+                        console.log(err);
+                        sumbit = true;
+                    }
+                })
+            }, shopTime)
+        }
+    }, zhujiTime)
+})
+
+$('.btn-cancel').on('click', function(argument) {
+    layer.open({
+        content: `{:lang('Cancel order')}`,
+        btn: [`{:lang('confirm')}`, `{:lang('cancel')}`],
+        shadeClose: false,
+        yes: function(index) {
+            $.ajax({
+                url: `{:url('order/do_order')}`,
+                type: "POST",
+                dataType: "JSON",
+                data: { oid: oid, add_id: add_id, status: 2 },
+                success: function(res) {
+                    console.log(res)
+                    if (res.code == 0) {
+                        QS_toast.show(`{:lang('Order cancelled successfully')}`, true);
+                        var linkTime = setTimeout(function() {
+                            location.href = res.url
+                        }, 1800);
+                    } else {
+                        QS_toast.show(res.info, true);
+                        layer.closeAll();
+                    }
+                    sumbit = true;
+                },
+                error: function(err) {
+                    console.log(err);
+                    sumbit = true;
+                }
+            })
+        },
+        no: function() {
+            layer.closeAll();
+        }
+    });
+
+})
+</script>
+
+</html>

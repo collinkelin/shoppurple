@@ -1,0 +1,146 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0">
+    <title>{:lang('My Wallet')}</title>
+    <link href="__PUBLIC__/statics/css/base.min.css__VER__" rel="stylesheet">
+    <link href="__PUBLIC__/statics/css/funding.min.css__VER__" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+</head>
+
+<body>
+    <header class="header">
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>{:lang('My Wallet')}</span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section class="container vpay-container">
+        <div class="vpay-account">
+            <div class="vpay-account-balance">
+                <span>{:lang('My balance')}</span>
+                <h1>{$balance|formatNumber}</h1>
+            </div>
+            <div class="vpay-account-details">
+                <ul>
+                    <li>
+                        <a href="">
+                            <span>{:lang('Withdrawable balance')}</span>
+                            <h3>{$balance|formatNumber}</h3>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <span>{:lang('Total revenue')}</span>
+                            <h3>{$balance_shouru|formatNumber}</h3>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="vpay-record">
+            <div class="tab-title tab-title-s">
+                <div class="tab-item">
+                    <div class="lava" style="left: 0px;"></div>
+                    <span class="active">{:lang('Revenue record')}</span>
+                    <span>{:lang('Withdrawal record')}</span>
+                    <span class="">{:lang('Recharge Record')}</span>
+                </div>
+            </div>
+            <div class="tab-content vpay-list" style="left: 0px;">
+                <div>
+                    <div class="record-list">
+                        <div class="record-list-title">
+                            <span>{:lang('Time')}</span>
+                            <span>{:lang('Intraday revenue')}</span>
+                            <span>{:lang('Revenue type')}</span>
+                        </div>
+                        {if $shouyi}
+                        {volist name='shouyi' id='vo'}
+                        <div class="record-list-content">
+                            <span>
+                                <?php echo date('Y-m-d H:i:s', $vo['addtime']); ?></span>
+                            <span><b class="record-red">{$vo.commission|formatNumber}</b></span>
+                            <span>{:lang('Commission rebate')}</span>
+                        </div>
+                        {/volist}
+                        {else\}
+                        {/if}
+                    </div>
+                </div>
+                <div>
+                    <div class="record-list">
+                        <div class="record-list-title">
+                            <span>{:lang('Time')}</span>
+                            <span>{:lang('Withdrawal amount')}</span>
+                            <span>{:lang('Withdrawal status')}</span>
+                        </div>
+                        {if $tixian}
+                        {volist name='tixian' id='vo'}
+                        <div class="record-list-content">
+                            <span>
+                                <?php echo date('Y-m-d H:i:s', $vo['addtime']); ?></span>
+                            <span><b class="record-red">{$vo.num|formatNumber}</b></span>
+                            {switch vo.status}
+                                {case 3}<span style="color: #FF5722;">{:lang('failure')}</span>{/case}
+                                {case 2}<span style="color: #01AAED;">{:lang('success')}</span>{/case}
+                                {default /}<span style="color: #5FB878;">{:lang('Processing')}</span>
+                            {/switch}
+                            <!-- <span>{:lang('Withdraw')}</span> -->
+                        </div>
+                        {/volist}
+                        {else\}
+                        {/if}
+                    </div>
+                </div>
+                <div>
+                    <div class="record-list">
+                        <div class="record-list-title">
+                            <span>{:lang('Time')}</span>
+                            <span>{:lang('Recharge amount')}</span>
+                            <span>{:lang('Recharge status')}</span>
+                        </div>
+                        {if $chongzhi}
+                        {volist name='chongzhi' id='vo'}
+                        <div class="record-list-content">
+                            <span>
+                                <?php echo date('Y-m-d H:i:s', $vo['addtime']); ?></span>
+                            <span><b class="record-red">{$vo.num|formatNumber}</b></span>
+                            {switch vo.status}
+                                {case 3}<span style="color: #FF5722;">{:lang('failure')}</span>{/case}
+                                {case 2}<span style="color: #01AAED;">{:lang('success')}</span>{/case}
+                                {default /}<span style="color: #5FB878;">{:lang('Processing')}</span>
+                            {/switch}
+                            <!-- <span>{:lang('Recharge')}</span> -->
+                        </div>
+                        {/volist}
+                        {else\}
+                        {/if}
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div class="vpay-toolbar">
+        <a href="{:url('recharge/recharge_before')}">{:lang('Recharge')}</a>
+        <a href="{:url('ctrl/deposit_before')}">{:lang('Withdraw')}</a>
+    </div>
+    </section>
+    <script src="__PUBLIC__/statics/js/main.js__VER__"></script>
+    <script>
+    $(function() {
+        setTimeout(function() {
+            $('.tab-item .active').prev().click();
+            $('.tab-item .active').prev().trigger("click");
+        }, 3000);
+    })
+    </script>
+</body>
+
+</html>

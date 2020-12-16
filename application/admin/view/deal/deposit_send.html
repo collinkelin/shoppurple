@@ -1,0 +1,30 @@
+<form onsubmit="return false" data-auto="true" action="{:url('do_send')}" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body padding-left-40">
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">选择模版</span>
+                <select name="tid" id="selectList">
+                    {foreach $tpls as $key=>$vo}
+                    <option value="{$vo.id}">{$vo.title}</option>
+                    {/foreach}
+                </select>
+            </label>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">积分卷串号</span>
+                <input name="msg" required placeholder="" value="" class="layui-input">
+            </label>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">发送</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消吗？" data-close>取消</button>
+            <input type="hidden" name="_csrf_" value="{:systoken('admin/deal/do_send')}">
+            <input type="hidden" name="id" value="{$info.id}">
+        </div>
+    </div>
+</form>
+<script>
+window.form.render();
+</script>

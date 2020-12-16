@@ -1,0 +1,86 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+    .form {
+            color: rgb(240, 98, 96);
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            padding: 0 .5rem;
+            border-bottom: 1px solid #eeeeee;
+            min-height: 60px;
+        }
+
+        .form>input {
+            border: none;
+            outline: none;
+            margin-right: auto;
+            color: rgb(240, 98, 96);
+            margin-left: 1rem;
+            font-size: 0.8rem;
+            width:70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .form_title {
+            font-size: .5rem;
+            width: 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .form_title img {
+            height: auto;
+        }
+
+        .form_title i {
+            font-size: 30px;
+        }
+
+        .copy_btn {
+            color: #60aef0;
+            width: 10%;
+            text-align: center;
+            height: 2rem;
+            line-height: 2rem;
+        }
+
+        .wrin{
+            padding:0 .3rem;
+            color:red;
+            width:90%;
+            margin:.5rem auto;
+        }
+    </style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Choose withdrawal method')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <div class="form_box">
+            {foreach $pay as $key=>$vo}
+            <a href="{:url($vo.url,['id' => $vo.id])}" class="form">
+                <div class="form_title">
+                    {eq name="vo.ico_type" value="1"}{$vo.ico|raw}{else/}<img src="{$vo.ico}" alt="" style="width: 40px; height:40px">{/eq}
+                </div>
+                <input type="text" id="bank_name" value="{$vo.name}" readonly>
+                <div class="copy_btn">></div>
+            </a>
+            {/foreach}
+            <p>{:lang('Withdrawal amount limit')}</p>
+        </div>
+        <p class="wrin"></p>
+    </div>
+</section>
+{/block}

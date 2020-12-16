@@ -1,0 +1,90 @@
+{extend name='admin@main'}
+{block name="content"}
+<div class="think-box-shadow">
+    <a class="layui-btn layui-btn layui-btn" data-open="{:url('add',['id'=>0])}" data-value="id#0" style='background:green;'>新增</a>
+    <table class="layui-table margin-top-15" lay-skin="line">
+        {notempty name='list'}
+        <thead>
+            <tr>
+                <th class='text-left nowrap'>ID</th>
+                <th class='text-left nowrap'>支付类型</th>
+                <th class='text-left nowrap'>银行名</th>
+                <th class='text-left nowrap'>支行名</th>
+                <th class='text-left nowrap'>支行编号</th>
+                <th class='text-left nowrap'>银行卡号</th>
+                <th class='text-left nowrap'>姓名</th>
+                <th class='text-left nowrap'>姓名汉字</th>
+                <th class='text-left nowrap'>电话号码</th>
+                <th class='text-left nowrap'>最小金额</th>
+                <th class='text-left nowrap'>最大金额</th>
+                <th class='text-left nowrap'>默认选择</th>
+                <th class='text-left nowrap'>二维码</th>
+                <th class='text-left nowrap'>状态</th>
+                {if auth("edit_home_msg")}
+                <th class='text-left nowrap'>操作</th>
+                {/if}
+            </tr>
+        </thead>
+        {/notempty}
+        <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td class='text-left nowrap'>{$vo.id}</td>
+                <td class='text-left nowrap'>
+                    <img src="{$vo.ico}" alt="" width="50">
+                </td>
+                <td class='text-left nowrap'>{$vo.bank_name}</td>
+                <td class='text-left nowrap'>{$vo.branch_name}</td>
+                <td class='text-left nowrap'>{$vo.branch_number}</td>
+                <td class='text-left nowrap'>{$vo.card_number}</td>
+                <td class='text-left nowrap'>{$vo.name_e}</td>
+                <td class='text-left nowrap'>{$vo.name}</td>
+                <td class='text-left nowrap'>{$vo.phone}</td>
+                <td class='text-left nowrap'>{$vo.min}</td>
+                <td class='text-left nowrap'>{$vo.max}</td>
+                <td class='text-left nowrap'>
+                    {eq name='vo.default' value='0'}<span class="color-red">否</span>{else}<span class="color-green">默认</span>{/eq}
+                </td>
+                <td class='text-left nowrap'>
+                    {if $vo.qrcode}<a data-dbclick data-title="查看图片" data-modal='{:url("admin/index/picinfo")}?pic={$vo.qrcode}'><img src="{$vo.qrcode}" style="width:150px;height:100px;"></a>{else /}<img src="{$vo.qrcode}" style="width:150px;height:100px;">{/if}
+                </td>
+                <td class='text-left nowrap'>
+                    {eq name='vo.status' value='0'}<span class="color-red">已禁用</span>{else}<span class="color-green">使用中</span>{/eq}
+                </td>
+                <td class='text-left nowrap'>
+                    {if auth("edit_home_msg")}
+                    <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑" data-open='{:url("edit")}?id={$vo.id}'>编 辑</a>
+                    {if $vo.status eq 1}
+                    <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('forbid')}" data-value="id#{$vo.id};status#0" data-csrf="{:systoken('forbid')}">禁 用</a>
+                    {elseif $vo.status eq 0}
+                    <a class="layui-btn layui-btn-warm layui-btn-xs" data-action="{:url('resume')}" data-value="id#{$vo.id};status#1" data-csrf="{:systoken('resume')}">启 用</a>
+                    {/if}
+                    <a class="layui-btn layui-btn-xs layui-btn" onClick="del_message({$vo.id})" style='background:red;'>删除</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+</div>
+<script>
+function del_message(id) {
+    layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" }, function(index) {
+        $.ajax({
+            type: 'POST',
+            url: "{:url('del')}",
+            data: {
+                'id': id,
+            },
+            beforeSend: function(request) {
+                request.setRequestHeader("User-Token-Csrf", "{:systoken('admin/pay_info/del')}");
+            },
+            success: function(res) {
+                layer.msg(res.info, { time: 2500 });
+                location.reload();
+            }
+        });
+    }, function() {});
+}
+</script>
+{/block}

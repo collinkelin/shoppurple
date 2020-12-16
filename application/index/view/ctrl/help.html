@@ -1,0 +1,85 @@
+{extend name='index@main'}
+{block name='css'}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/res/common/css/hui.min.css__VER__">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/userstyle.min.css__VER__">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/base.min.css__VER__">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/user.min.css__VER__">
+<link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+{/block}
+{block name='style'}
+<style>
+.data_item {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    height: 2rem;
+    line-height: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+a:link,a:visited{ 
+    text-decoration:none;  /*超链接无下划线*/ 
+} 
+a:hover{ 
+    text-decoration:underline;  /*鼠标放上去有下划线*/ 
+} 
+
+.head {
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto 1rem auto auto;
+}
+
+.right {
+    width: 1.2rem;
+    height: 1.7rem;
+    margin: auto 0 auto 0;
+}
+.right i {
+    font-size: 1rem;
+}
+
+</style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Help center')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container" style="padding-top: 2.5rem;">
+        <div class="article-box">
+            {foreach $list as $key=>$vo}
+            {notempty name='vo.url'}
+            <a href="{$vo.url}" class="article-list" target="_blank">
+                <h3 style="color:#000">{$vo.title}</h3>
+                <em class="remind"></em>
+            </a>
+            {/notempty}
+            {/foreach}
+        </div>
+        {foreach $list as $key=>$vo}
+        {notempty name='vo.url'}
+        <!-- <a href="{$vo.url}" class="data_item" id="head" target="_blank">
+            <div class="form_title">{$vo.title}</div>
+            <div class="right">
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </div>
+        </a> -->
+        {/notempty}
+        {/foreach}
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script>
+</script>
+{/block}

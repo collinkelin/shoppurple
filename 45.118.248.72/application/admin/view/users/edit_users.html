@@ -1,0 +1,102 @@
+<form class="layui-form layui-card" action="{:request()->url()}" data-auto="true" method="post" autocomplete="off">
+    <div class="layui-card-body">
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">用户名称</label>
+            <div class="layui-input-block">
+                <input name="user_name" required placeholder="请输入用户名称" value="{$info.username}" class="layui-input">
+                {:token()}
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">用户名</label>
+            <div class="layui-input-block">
+                <input name="username" required placeholder="请输入用户名" value="{$info.username}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">账号余额</label>
+            <div class="layui-input-block">
+                <input name="balance" type="number" min="0" required placeholder="请输入账号余额" value="{$info.balance}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">冻结金额</label>
+            <div class="layui-input-block">
+                <input name="freeze_balance" type="number" min="0" required placeholder="冻结金额" value="{$info.freeze_balance}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">VIP等级</label>
+            <div class="layui-input-block">
+                <select name="level" id="selectList">
+                    {foreach $levels as $key=>$vo}
+                    <option value="{$vo.level}" test {eq name="$info['level']" value="$vo['level']"}selected=""{/eq}>{$vo.name}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">历史充值</label>
+            <div class="layui-input-block">
+                <input name="recharge_total" type="number" min="0" required placeholder="历史充值" value="{$info.recharge_total}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">登录密码</label>
+            <div class="layui-input-block">
+                <input name="pwd" placeholder="留空不修改密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">提现密码</label>
+            <div class="layui-input-block">
+                <input name="pwd2" placeholder="留空不修改密码" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">上级ID</label>
+            <div class="layui-input-block">
+                <input name="parent_id" placeholder="请输入上级ID" value="{$info.parent_id}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">特殊单次数</label>
+            <div class="layui-input-block">
+                <input name="task" placeholder="发布的特殊单次数" value="{$info.task}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">消息ID</label>
+            <div class="layui-input-block">
+                <input name="special" placeholder="所发送的消息ID" value="{$info.special}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label label-required">交易状态</label>
+            <div class="layui-input-block">
+                <select name="deal_status" id="deal_status">
+                    <option value="0" {eq name="$info.deal_status" value="0"}selected=""{/eq}>交易冻结</option>
+                    <option value="1" {eq name="$info.deal_status" value="1"}selected=""{/eq}>停止交易</option>
+                    <option value="2" {eq name="$info.deal_status" value="2"}selected=""{/eq}>等待交易</option>
+                    <option value="3" {eq name="$info.deal_status" value="3"}selected=""{/eq}>交易中</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">账号类型</label>
+            <div class="layui-input-block">
+                <input type="radio" name="private" value="0" title="正式用户" {eq name='info.private' value='0'}checked=""{/eq}>
+                <input type="radio" name="private" value="1" title="系统用户" {eq name='info.private' value='1'}checked=""{/eq}>
+            </div>
+        </div>
+    </div>
+    <input name="id" type="hidden" value="{$info.id}">
+    <div class="hr-line-dashed"></div>
+    <div class="layui-form-item text-center">
+        <button class="layui-btn" type='submit'>提交</button>
+        <button class="layui-btn layui-btn-danger" type='button' data-close>取消</button>
+    </div>
+    <script>
+    window.form.render();
+    </script>
+</form>

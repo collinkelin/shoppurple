@@ -1,0 +1,110 @@
+@color_1: #fff;
+
+html {
+    font-size: 20px;
+}
+
+body {
+    width: 100%;
+
+    section {
+        max-width: 750px;
+        margin: auto;
+        margin-top: 44px;
+        padding: 0;
+    }
+
+    header {
+        font-size: .8rem;
+
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        right: 0;
+        left: 0;
+
+        max-width: 750px;
+        height: 44px;
+        margin: auto;
+        padding: 0;
+
+        text-align: center;
+
+        color: #fff;
+        background: #00bcd4;
+        background-image: linear-gradient(135deg, #a26cd2 10%, #7a01f3 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+            font-size: .7rem;
+            margin: auto;
+            color: #fff;
+        }
+
+        >.back {
+            top: 0;
+            bottom: 0;
+            left: .5rem;
+            width: 1.5rem;
+            height: 1.2rem;
+            i {
+                color: #fff;
+                font-size: 26px;
+            }
+        }
+    }
+}
+
+.layui-m-layermain,
+.layui-m-layershade {
+    right: 0;
+}
+
+.QS-toast {
+    position: fixed;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    opacity: 0;
+    -webkit-transition-property: opacity;
+    transition-property: transform, opacity;
+    -webkit-transform: translate3d(0, 0, 0) scale(.9);
+    transform: translate3d(0, 0, 0) scale(.9);
+    -webkit-transition-property: -webkit-transform, opacity;
+    transition-property: transform, opacity;
+    z-index: 19891015;
+
+    &-text {
+        display: inline-block;
+        color: @color_1;
+        padding: 0.4rem 0.5rem;
+        border-radius: 0.2rem;
+        background: rgba(0, 0, 0, 0.75);
+        font-size: 0.75rem;
+        line-height: 1rem;
+        max-width: 60%;
+    }
+
+    &.in {
+        opacity: 1;
+        -moz-transition-duration: 300ms;
+        -webkit-transition-duration: 300ms;
+        transition-duration: 300ms;
+        -webkit-transform: translate3d(0, 0, 0) scale(1);
+        transform: translate3d(0, 0, 0) scale(1);
+        left: 0;
+        right: 0;
+    }
+
+    &.out {
+        opacity: 0;
+        z-index: 10999;
+        -moz-transition-duration: 300ms;
+        -webkit-transition-duration: 300ms;
+        transition-duration: 300ms;
+        -webkit-transform: translate3d(0, 0, 0) scale(0.8);
+        transform: translate3d(0, 0, 0) scale(0.8);
+    }
+}

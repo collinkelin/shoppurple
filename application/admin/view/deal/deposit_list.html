@@ -1,0 +1,198 @@
+{extend name='main'}
+{block name="content"}
+<div class="think-box-shadow">
+    <fieldset>
+        <legend>条件搜索</legend>
+        <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+            <div class="layui-form-item layui-inline">
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">订单号</div>
+                    <div class="layui-input-inline">
+                        <input name="oid" value="{$Think.get.oid|default=''}" placeholder="请输入订单号" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">用户名称</div>
+                    <div class="layui-input-inline">
+                        <input name="username" value="{$Think.get.username|default=''}" placeholder="请输入用户名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">姓名</div>
+                    <div class="layui-input-inline">
+                        <input name="name" value="{$Think.get.name|default=''}" placeholder="请输入姓名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">电话</div>
+                    <div class="layui-input-inline">
+                        <input name="tel" value="{$Think.get.tel|default=''}" placeholder="请输入电话" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">顶级用户</div>
+                    <div class="layui-input-inline">
+                        <input name="parent" value="{$Think.get.parent|default=''}" placeholder="请输入顶级用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">发起时间</div>
+                    <div class="layui-input-inline">
+                        <input data-date-range name="addtime" value="{$Think.get.addtime|default=''}" placeholder="请选择发起时间" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">订单状态</div>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <select name="status">
+                            <option value="0" {empty name="Think.get.status"}selected=""{/empty}>所有</option>
+                            <option value="1" {eq name="Think.get.status" value="1"}selected=""{/eq}>下单成功</option>
+                            <option value="2" {eq name="Think.get.status" value="2"}selected=""{/eq}>充值成功</option>
+                            <option value="3" {eq name="Think.get.status" value="3"}selected=""{/eq}>充值失败</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">排序类型</div>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <select name="sortKey">
+                            <option value="addtime" {eq name="Think.get.sortKey" value="addtime"}selected=""{/eq}>发起时间</option>
+                            <option value="id" {eq name="Think.get.sortKey" value="id"}selected=""{/eq}>ID</option>
+                            <option value="uid" {eq name="Think.get.sortKey" value="uid"}selected=""{/eq}>用户ID</option>
+                            <option value="num" {eq name="Think.get.sortKey" value="num"}selected=""{/eq}>操作金额</option>
+                            <option value="status" {eq name="Think.get.sortKey" value="status"}selected=""{/eq}>订单状态</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">排序方法</div>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <select name="sort">
+                            <option value="DESC" {eq name="Think.get.sort" value="DESC"}selected=""{/eq}>降序</option>
+                            <option value="ASC" {eq name="Think.get.sort" value="ASC"}selected=""{/eq}>升序</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+    <script>form.render()</script>
+    <fieldset>
+        总额：{$amount} / 实际：{$arrival}
+    </fieldset>
+    <table class="layui-table margin-top-15" lay-skin="line">
+        {notempty name='list'}
+        <thead>
+            <tr>
+                <th class='list-table-check-td think-checkbox'>
+                    <input data-auto-none data-check-target='.list-check-box' type='checkbox'>
+                </th>
+                <th class='text-left nowrap'>订单号</th>
+                <th class='text-left nowrap'>提现用户</th>
+                <th class='text-left nowrap'>顶级用户</th>
+                <th class='text-left nowrap'>提现金额</th>
+                <th class='text-left nowrap' style="color: #FF5722;">实际金额</th>
+                <th class='text-left nowrap'>银行名称</th>
+                <th class='text-left nowrap'>支行名</th>
+                <th class='text-left nowrap'>支行编号</th>
+                <th class='text-left nowrap'>银行卡号</th>
+                <th class='text-left nowrap'>名字</th>
+                <th class='text-left nowrap'>名字(汉字)</th>
+                <th class='text-left nowrap'>联系电话</th>
+                <th class='text-left nowrap'>发起时间</th>
+                <th class='text-left nowrap'>处理时间</th>
+                <th class='text-left nowrap'>方式</th>
+                <th class='text-left nowrap'>二维码</th>
+                <th class='text-left nowrap'>正面</th>
+                <th class='text-left nowrap'>反面</th>
+                <th class='text-left nowrap'>订单状态</th>
+                {if auth('do_deposit')}
+                <th class='text-left nowrap'>操作</th>
+                {/if}
+            </tr>
+        </thead>
+        {/notempty}
+        <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td class='list-table-check-td think-checkbox'>
+                    <input class="list-check-box" value='{$vo.id}' type='checkbox'>
+                </td>
+                <td class='text-left nowrap'>{$vo.id}</td>
+                <td class='text-left nowrap'><a href="/admin.html#/admin/deal/deposit_list.html?spm=m-69-72-76&username={$vo.username}">{$vo.username}</a><a href="/admin.html#/admin/users/index.html?spm=m-62-63-64&username={$vo.username}">[查看用户]</a></td>
+                <td class='text-left nowrap'>{if $vo.parent_first > 0}<a href="/admin.html#/admin/users/index.html?spm=m-62-63-64&username={:getUser($vo.parent_first)['username']}">{:getUser($vo.parent_first)['username']}</a>{/if}{if $vo.parent_first > 0}<a href="/admin.html#/admin/deal/deposit_list.html?spm=m-69-72-76&parent={:getUser($vo.parent_first)['username']}">[下线提现]</a>{/if}</td>
+                <td class='text-left nowrap'>¥{$vo.num}</td>
+                <td class='text-left nowrap' style="color: #FF5722;">¥{$vo.arrival}</td>
+                <td class='text-left nowrap'>{$vo.bank_name}</td>
+                <td class='text-left nowrap'>{$vo.branch_name}</td>
+                <td class='text-left nowrap'>{$vo.branch_number}</td>
+                <td class='text-left nowrap'>{$vo.card_number}</td>
+                <td class='text-left nowrap'>{$vo.name_e}</td>
+                <td class='text-left nowrap'>{$vo.name}</td>
+                <td class='text-left nowrap'>{$vo.tel}</td>
+                <td class='text-left nowrap'>{$vo.addtime|format_datetime}</td>
+                <td class='text-left nowrap'>{$vo.endtime|format_datetime}</td>
+                <td class='text-left nowrap'>{$vo.pname}</td>
+                <td class='text-left nowrap'>
+                    {if ($vo.type == 'wx') }
+                    <a data-dbclick data-title="查看图片" data-modal='{:url("admin/index/picinfo")}?pic={$vo.wx_ewm}'><img src="{$vo.wx_ewm}" style="width:150px;height:100px;"></a>
+                    {/if}
+                    {if ($vo.type == 'zfb') }
+                    <a data-dbclick data-title="查看图片" data-modal='{:url("admin/index/picinfo")}?pic={$vo.zfb_ewm}'><img src="{$vo.zfb_ewm}" style="width:150px;height:100px;"></a>
+                    {/if}
+                </td>
+                <td class='text-left nowrap'>
+                    {if $vo.pic}<a data-dbclick data-title="查看图片" data-modal='{:url("admin/index/picinfo")}?pic={$vo.pic}'><img src="{$vo.pic}" style="width:150px;height:100px;"></a>{else /}<img src="{$vo.pic}" style="width:150px;height:100px;">{/if}
+                </td>
+                <td class='text-left nowrap'>
+                    {if $vo.pic2}<a data-dbclick data-title="查看图片" data-modal='{:url("admin/index/picinfo")}?pic={$vo.pic2}'><img src="{$vo.pic2}" style="width:150px;height:100px;"></a>{else /}<img src="{$vo.pic2}" style="width:150px;height:100px;">{/if}
+                </td>
+                <td class='text-left nowrap'>
+                    {switch $vo.status}
+                    {case 1}待审核{/case}
+                    {case 2}审核通过{/case}
+                    {case 3}审核驳回{/case}
+                    {/switch}
+                </td>
+                <td class='text-left nowrap'>
+                    {if ($vo.status == 1) and auth("do_deposit")}
+                    {if ($vo.ptype == 1) }
+                    <a data-dbclick class="layui-btn layui-btn-xs layui-btn-danger" data-title="发送积分卷" data-modal='{:url("admin/deal/deposit_send")}?id={$vo.id}'>发送积分卷</a>
+                    {/if}
+                    <!-- <a class="layui-btn layui-btn-xs" data-csrf="{:systoken('admin/deal/do_deposit')}" data-action="{:url('do_deposit')}" data-value="id#{$vo.id};status#2">通过</a> -->
+                    <a class="layui-btn layui-btn-xs layui-btn" onClick="agree('{$vo.id}')">通过</a>
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" data-modal="{:url('do_deposit')}?id={$vo.id}">驳回</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    {empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
+</div>
+    <script>
+    function agree(id) {
+        console.log(id);
+        layer.confirm("确认要通过吗，通过后不能恢复", { title: "通过确认" }, function(index) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('do_deposit')}",
+                data: {
+                    'id': id,
+                    'status': 2,
+                },
+                headers: {
+                    'User-Token-Csrf': `{:systoken('admin/deal/do_deposit')}` 
+                },
+                success: function(res) {
+                    layer.msg(res.info, { time: 2500 });
+                    location.reload();
+                }
+            });
+        }, function() {});
+    }
+    </script>
+{/block}

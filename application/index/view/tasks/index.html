@@ -1,0 +1,127 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+    .list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-bottom: .1rem solid rgb(248, 242, 242);
+    padding: .3rem 1rem;
+    font-size: .7rem;
+}
+
+.list li .items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.money div {
+    display: block;
+    flex-direction: column;
+    width: 100%;
+    color: #8BC34A
+}
+.title {
+    text-align: center;
+}
+</style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Withdraw record')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <ul class="list"></ul>
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script type="text/html" id="list-tpl">
+    {{ for(var key in it.data) { }}
+<li id="{{= it.data[key].id }}">
+    <div class="items title">
+        <p>{{= it.data[key].title }}</p>
+    </div>
+    <div class="items">
+        <p>开放时间:{{= it.data[key].time_start }} - {{= it.data[key].time_end }}</p>
+        <p style="{{= getColor(it.data[key]) }}">{{= getStatus(it.data[key]) }}</p>
+    </div>
+    <div class="items">
+        <div class="money">
+            <div>{:lang('Withdrawal amount')}</div>
+            <div>{{= milliFormat(it.data[key].num) }}</div>
+        </div>
+        <div class="money">
+            <div>{:lang('Actually arrived')}</div>
+            <div>{{= milliFormat(it.data[key].arrival) }}</div>
+        </div>
+        <div class="money">
+            <div>{:lang('Handling fee')}</div>
+            <div>{{= milliFormat(it.data[key].handling_fee) }}</div>
+        </div>
+    </div>
+</li>
+{{  } }}
+</script>
+<script>
+function getColor(val) {
+    switch (val.status) {
+        case 2:
+            return 'color: #059fce';
+            break;
+        case 3:
+            return 'color: #fd0a0a';
+            break;
+        default:
+            return 'color: #FFB800';
+            break;
+    }
+}
+
+function getStatus(val) {
+    switch (val.status) {
+        case 2:
+            return `{:lang('Successful withdrawal')}`
+            break;
+        case 3:
+            return `{:lang('Withdrawal failed')}`
+            break;
+        default:
+            return `{:lang('Pending')}`
+            break;
+    }
+}
+var page = 1;
+$(function() {
+    list(page)
+})
+
+function list(page) {
+    $.ajax({
+        url: urlPost("tasks/index"),
+        type: "POST",
+        dataType: "JSON",
+        data: { page, num: 15 },
+        success: function(res) {
+            if (res.code == 0) {
+                let list = res.data;
+                if (page != 1 && list.length == 0) {
+                    QS_toast.show(`{:lang('No more data')}...`, true)
+                }
+                var tpl1 = doT.template($("#list-tpl").html());
+                $('.list').html(tpl1(res));
+            }
+        },
+        error: function(err) { console.log(err) }
+    })
+}
+</script>
+{/block}

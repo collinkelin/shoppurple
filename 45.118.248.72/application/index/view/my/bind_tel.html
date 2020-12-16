@@ -1,0 +1,176 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+    .form {
+            width: 90%;
+            margin: .5rem auto;
+        }
+
+        .form .form_title {
+            line-height: 1.5rem;
+        }
+
+        .input_box {
+            height: 100%;
+            border: 1px solid #e2dcdc;
+            border-radius: 3px;
+        }
+
+        .input_box input {
+            border: none;
+            outline: none;
+            height: 100%;
+            width: 100%;
+            text-indent: 10px;
+        }
+
+        .input_box input::placeholder {
+            color: #a7a7a7;
+        }
+
+        .verify>.input_box {
+            margin-left: 0rem;
+        }
+
+        .verify_btn {
+            margin-left: 0rem;
+            border: 1px solid #e2dcdc;
+            border-radius: 3px;
+            margin-top: 10px;
+            width: 25%;
+            text-align: center;
+            height: 1.5rem;
+            line-height: 1.5rem;
+            font-size: .5rem;
+        }
+
+        .btn {
+            width: 90%;
+            height: 2rem;
+            line-height: 2rem;
+            background: #00bcd4;
+            border-radius: 7px;
+            text-align: center;
+            color: white;
+            margin: 2rem auto;
+        }
+    </style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Mobile phone binding')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <div class="form">
+            <p class="form_title">{:lang('Login password safe')}:</p>
+            <div class="input_box">
+                <input type="password" placeholder="{:lang('Please enter a password safe')}" id="pwd">
+            </div>
+        </div>
+        <div class="form">
+            <p class="form_title">{:lang('New phone number')}:</p>
+            <div class="input_box">
+                <input type="text" placeholder="{:lang('Please enter a new phone number')}" id="new_tel">
+            </div>
+        </div>
+        <div class="form verify">
+            <p class="form_title">{:lang('Verification code')}:</p>
+            <div class="input_box">
+                <input type="text" placeholder="{:lang('Please enter verification code')}" id="verify">
+            </div>
+            <div class="verify_btn">{:lang('get verification code')}</div>
+        </div>
+        <div class="btn">{:lang('confirm')}</div>
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script>
+var t = 60,
+    clock = null,
+    submit = true;
+
+$(".btn").click(function() {
+    var tel = $("#tel").val(),
+        verify = $("#verify").val(),
+        new_tel = $("#new_tel").val(),
+        pwd = $("#pwd").val();
+    if (pwd == "") {
+        QS_toast.show(`{:lang('Please enter a password')}`, true)
+    } else if (verify == "") {
+        QS_toast.show(`{:lang('Please enter verification code')}`, true)
+    } else if (new_tel == "") {
+        QS_toast.show(`{:lang('Please enter a new phone number')}`, true)
+    } else {
+        if (submit) {
+            submit = false;
+            $.ajax({
+                url: urlPost('my/reset_tel'),
+                type: "POST",
+                dataType: "JSON",
+                data: { tel: new_tel, verify: verify, pwd: pwd },
+                success: function(res) {
+                    console.log(res)
+                    if (res.code == 0) {
+                        QS_toast.show(res.info, true)
+                        submit = true;
+                    } else {
+                        QS_toast.show(res.info, true)
+                        submit = true;
+                    }
+                },
+                error: function(err) { console.log(err), submit = true; }
+            })
+        }
+    }
+})
+
+// 获取验证码
+$('.verify_btn').click(function() {
+    var tel = $("#new_tel").val();
+    if (clock) return;
+    // $(".verify_btn").css('color', '#777777').css('background-color', '#e6e6e6');
+    $.ajax({
+        url: urlPost('api/send_msg'),
+        type: "POST",
+        dataType: "JSON",
+        data: { tel },
+        success: function(res) {
+            console.log(res)
+            if (res.code == 0) {
+                QS_toast.show(res.info, true)
+                clock = setInterval(verify_time, 1000);
+            } else {
+                // $(".verify_btn").css('color', '#000').css('background-color', '#01aaed');
+                QS_toast.show(res.info, true)
+            }
+        },
+        error: function(err) {
+            // $(".verify_btn").css('color', '#000').css('background-color', '#01aaed');
+            console.log(err)
+        }
+    })
+})
+
+
+function verify_time() {
+    $(".verify_btn").text(`{:lang('Has been sent')}(${t})`).css('color', '#777777');
+    // $(".verify_btn").text(`{:lang('Has been sent')}(${t})`).css('color', '#777777').css('background-color', '#e6e6e6');
+    t--;
+    if (t <= 0) {
+        clearInterval(clock);
+        clock = null;
+        t = 60;
+        $(".verify_btn").text("{:lang('get verification code')}").css('color', '#000');
+        // $(".verify_btn").text("{:lang('get verification code')}").css('color', '#000').css('background-color', '#01aaed');
+    }
+}
+</script>
+{/block}

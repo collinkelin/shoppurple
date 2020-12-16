@@ -1,0 +1,34 @@
+{extend name='admin@main'}
+{block name="content"}
+<form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body think-box-shadow padding-left-40">
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">标题</span>
+                <input name="title" required class="layui-input" placeholder="请输入标题">
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">跳转链接</span>
+                <input name="url" class="layui-input" placeholder="请输入跳转链接">
+            </label>
+        </div>
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">排序</span>
+                <input type="number" name="sort" class="layui-input" placeholder="请输入排序(数字越大越靠前)">
+            </label>
+        </div>
+        <div class="layui-form-item block">
+            <span class="label-required-prev color-green">内容</span>
+            <textarea name="content"></textarea>
+        </div>
+        <div class="layui-form-item text-center">
+            <input type="hidden" name="_csrf_" value="{:systoken('admin/help/help_add')}">
+            <button class="layui-btn" type="submit">提交</button>
+            <button class="layui-btn layui-btn-danger" ng-click="hsitoryBack()" type="button">取消</button>
+        </div>
+    </div>
+</form>
+{/block}

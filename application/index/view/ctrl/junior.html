@@ -1,0 +1,239 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+.cont>div {
+    display: nthree;
+}
+
+.list li {
+    padding: .2rem .5rem;
+    min-height: 2.7rem;
+    height: auto;
+    position: relative;
+}
+
+.head {
+    width: 2rem;
+    height: 2rem;
+    background: #eeeeee;
+    margin: auto .5rem auto 0;
+}
+
+.list li>div {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    justify-content: space-between;
+}
+
+.list li>div>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.last {
+    margin-left: auto;
+    text-align: right;
+}
+
+.user-tel,
+.user-times {
+    font-size: .5rem;
+    color: #777777;
+}
+
+.list li>div:nth-child(3) {
+    margin-left: auto;
+}
+
+.user-num {
+    color: #00bcd4;
+}
+
+.list .down_list {
+    display: none;
+    background: white;
+    width: 100%;
+}
+
+.active>div {}
+
+.active>div::after {
+    content: "";
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    left: 0;
+    right: 0;
+    bottom: .2rem;
+    margin: auto;
+    background-image: url(__ROOT__/public/img/right.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    transform: rotate(90deg)
+}
+
+.active>.down_list {
+    display: block;
+}
+</style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Directly member')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <div class="cont">
+            <div style=" display: block;">
+                <ul class="list1 list">
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script>
+$(function() {
+    $.ajax({
+        url: urlPost("ctrl/bot_user"),
+        type: "GET",
+        dataType: "JSON",
+        data: {},
+        success: function(res) {
+            console.log(res)
+            if (res.code == 0) {
+                var list = res.data;
+                list.map(function(val) {
+                    $(".list1").append(`
+                            <li class="one" data-id="one" id="${val.id}">
+                                   <div>
+                                        <div class="head"><img src="${val.headpic}" alt=""></div>
+                                    <div>
+                                        <p class="user-name">${val.nickname}</p>
+                                        <!-- <p class="user-tel">${val.tel}</p> -->
+                                    </div>
+                                    <div class="last">
+                                        <p class="user-times">${timeTransform(val.addtime)}</p>
+                                        <p>{:lang('Direct number of people')}: <span class="user-num">${val.childs}</span></p>
+                                    </div>
+                                    </div>
+                                    <ul class="down_list">
+                                    </ul>
+                            </li>`)
+                })
+            } else {
+                QS_toast.show(res.info, true)
+            }
+        },
+        error: function(err) {
+            console.log(err);
+            submit = true
+        }
+    })
+})
+
+// 一代下级下拉
+$(".list").on('click', '.one', function(e) {
+    var _this = $(e.target),
+        id = _this.attr('id') || _this.parents('.one').attr('id');
+    $.ajax({
+        url: urlPost("ctrl/bot_user"),
+        type: "POST",
+        dataType: "JSON",
+        data: { id: id },
+        success: function(res) {
+            console.log(res)
+            if (res.code == 0) {
+                var list = res.data;
+                $(e.target).parents('.one').children(".down_list").html("")
+                list.map(function(val) {
+                    $(e.target).parents('.one').children(".down_list").append(`
+                            <li class="two" data-id="two" id="${val.id}">
+                                   <div>
+                                        <div class="head"><img src="${val.headpic}" alt=""></div>
+                                    <div>
+                                        <p class="user-name">${val.nickname}</p>
+                                        <!-- <p class="user-tel">${val.tel}</p> -->
+                                    </div>
+                                    <div class="last">
+                                        <p class="user-times">${timeTransform(val.addtime)}</p>
+                                        <p>{:lang('Direct number of people')}: <span class="user-num">${val.childs}</span></p>
+                                    </div>
+                                    </div>
+                                    <ul class="down_list">
+                                    </ul>
+                            </li>
+                        `)
+                })
+            } else {
+                QS_toast.show(res.info, true)
+                $(e.target).parents('.one').removeClass('active')
+            }
+        },
+        error: function(err) { console.log(err) }
+    })
+    if (_this.attr('data-id') == 'one') {
+        $(e.target).toggleClass('active')
+    } else {
+        $(e.target).parents('li').toggleClass('active')
+    }
+});
+
+// 二代下拉
+$(".list").on('click', '.two', function(e) {
+    e.stopPropagation()
+    var _this = $(e.target),
+        id = _this.attr('id') || _this.parent('.two').attr('id');
+    $.ajax({
+        url: urlPost("ctrl/bot_user"),
+        type: "POST",
+        dataType: "JSON",
+        data: { id: id },
+        success: function(res) {
+            console.log(res)
+            if (res.code == 0) {
+                var list = res.data;
+                $(e.target).parents('.two').children(".down_list").html("")
+                list.map(function(val) {
+                    $(e.target).parents('.two').children(".down_list").append(`
+                            <li class="three" data-id="three" id="${val.id}">
+                                   <div>
+                                        <div class="head"><img src="${val.headpic}" alt=""></div>
+                                    <div>
+                                        <p class="user-name">${val.nickname}</p>
+                                        <!-- <p class="user-tel">${val.tel}</p> -->
+                                    </div>
+                                    <div class="last">
+                                        <p class="user-times">${timeTransform(val.addtime)}</p>
+                                        <p>{:lang('Direct number of people')}: <span class="user-num">${val.childs}</span></p>
+                                    </div>
+                                    <ul class="down_list">
+                                    </ul>
+                            </li>
+                        `)
+                })
+            } else {
+                QS_toast.show(res.info, true)
+                $(e.target).parents('.two').removeClass('active')
+            }
+        },
+        error: function(err) { console.log(err) }
+    })
+
+    if (_this.attr('data-id') == 'two') {
+        $(e.target).toggleClass('active')
+    } else {
+        $(e.target).parents('.two').toggleClass('active')
+    }
+})
+</script>
+{/block}

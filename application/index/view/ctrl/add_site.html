@@ -1,0 +1,130 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+    .form_container {
+        border-top: 1px solid #f3f3f3;
+        margin-top: 1rem;
+    }
+
+    .form {
+        width: 90%;
+        margin: .5rem auto;
+    }
+
+    .form .form_title {
+        color: black;
+        font-weight: 500;
+    }
+
+    .input_box {
+        height: 100%;
+        border: 1px solid #e2dcdc;
+        border-radius: 3px;
+    }
+
+    .input_box input {
+        border: none;
+        outline: none;
+        height: 100%;
+        width: 100%;
+        text-indent: 10px;
+    }
+
+    .input_box input::placeholder {
+        color: #a7a7a7;
+    }
+
+    .btn {
+        width: 90%;
+        height: 2rem;
+        line-height: 2rem;
+        text-align: center;
+        color: white;
+        margin: 2rem auto 0;
+        border-radius: 5px;
+        background: #9374EB;
+    }
+</style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Add shipping address')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <div class="form">
+            <p class="form_title">{:lang('Consignee name set')}</p>
+            <div class="input_box">
+                <input type="text" placeholder="{:lang('Please enter the consignee name')}" id="name">
+            </div>
+        </div>
+        <div class="form">
+            <p class="form_title">{:lang('Area')}:</p>
+            <div class="input_box">
+                <input type="text" placeholder="{:lang('Please enter the shipping address')}" id="area">
+            </div>
+        </div>
+        <div class="form">
+            <p class="form_title">{:lang('Detailed address')}:</p>
+            <div class="input_box">
+                <input type="text" placeholder="{:lang('Please fill in the detailed address')}" id="site">
+            </div>
+        </div>
+        <div class="form">
+            <p class="form_title">{:lang('cellphone number')}:</p>
+            <div class="input_box">
+                <input type="text" placeholder="{:lang('Please enter a mobile number')}" id="phone">
+            </div>
+        </div>
+        <div class="btn">{:lang('confirm')}</div>
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script>
+$(".btn").click(function() {
+    var name = $("#name").val(),
+        area = $('#area').val(),
+        site = $('#site').val(),
+        phone = $('#phone').val();
+    if (name == "") {
+        QS_toast.show(`{:lang('Please enter the consignee name')}`, true)
+    } else if (area == "") {
+        QS_toast.show(`{:lang('Please enter the shipping address')}`, true)
+    // } else if (site == "") {
+    //     QS_toast.show(`{:lang('Please fill in the detailed address')}`, true)
+    } else if (phone == "") {
+        QS_toast.show(`{:lang('Please enter a mobile number')}`, true)
+    } else {
+        var token = "{$Request.token}";
+        var data = { name: name, tel: phone, address: site, area: area, token: token }
+        $.ajax({
+            url: urlPost('my/add_address'),
+            type: "POST",
+            dataType: "JSON",
+            data: data,
+            success: function(res) {
+                console.log(res)
+                if (res.code == 0) {
+                    QS_toast.show(res.info, true);
+                    var timer = setTimeout(function() {
+                        history.back(-1)
+                    }, 1800)
+                } else {
+                    QS_toast.show(res.info, true)
+                }
+            },
+            error: function(err) {
+                console.log(err)
+            }
+        })
+    }
+})
+</script>
+{/block}

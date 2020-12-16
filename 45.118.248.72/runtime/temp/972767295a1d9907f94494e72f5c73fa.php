@@ -1,0 +1,6 @@
+<?php /*a:1:{s:64:"/www/wwwroot/45.118.248.72/application/index/view/my/invite.html";i:1586689600;}*/ ?>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" /><meta http-equiv="X-UA-Compatible" content="ie=edge"><title><?php echo lang('share'); ?></title><link rel="stylesheet" href="/public/css/style.min.css?v=1595234869"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"><script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script><script src="/public/js/common.min.js?v=1595234869"></script><style type="text/css" media="screen">
+        html {
+            background-color: #B403C3;
+        }
+    </style></head><body><header><a class="back" href="javascript:history.go(-1);"><i class="fa fa-chevron-left" aria-hidden="true"></i></a><span><?php echo lang('share'); ?></span><a class="back" href="/"><i class="fa fa-home" aria-hidden="true"></i></a></header><section class="my-invite"><div><img src="<?php echo htmlentities($pic); ?>" onerror="this.src='/public/img/user_share.png'" alt=""></div></section></body></html>

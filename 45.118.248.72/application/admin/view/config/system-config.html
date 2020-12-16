@@ -1,0 +1,126 @@
+<form onsubmit="return false" data-auto="true" action="{:url()}" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body padding-left-40">
+        <div class="layui-form-item">
+            <span class="color-green font-w7">站点开关</span>
+            <div class="">
+                <input type="radio" name="site_switch" value="1" title="开启" {eq name=":sysconf('site_switch')" value="1"}checked=""{/eq}>
+                <input type="radio" name="site_switch" value="0" title="关闭" {eq name=":sysconf('site_switch')" value="0"}checked=""{/eq}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <span class="color-green font-w7">维护公告</span>
+            <div class="">
+                <textarea name="site_switch_bulletin" placeholder="请输入内容" class="layui-textarea">{:sysconf('site_switch_bulletin')}</textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">充值超时自动驳回(未上传凭证)</span>
+                <input name="recharge_timeout" required placeholder="" value="{:sysconf('recharge_timeout')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">验证方式</span>
+                <select name="verify_type" id="selectList">
+                    <option value="sms" {eq name=":sysconf('verify_type')" value="sms"}selected=""{/eq}>短信</option>
+                    <option value="mail" {eq name=":sysconf('verify_type')" value="mail"}selected=""{/eq}>邮件</option>
+                </select>
+            </label>
+        </div>
+        <div class="layui-form-item">
+            <span class="color-green font-w7">开启验证码</span>
+            <div class="">
+                <input type="radio" name="verify_switch" value="1" title="开启" {eq name=":sysconf('verify_switch')" value="1"}checked=""{/eq}>
+                <input type="radio" name="verify_switch" value="0" title="关闭" {eq name=":sysconf('verify_switch')" value="0"}checked=""{/eq}>
+            </div>
+        </div>
+        {eq name=":sysconf('verify_type')" value="sms"}
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">短信通道</span>
+                <select name="sms_type" id="selectList">
+                    <option value="smsbao" {eq name=":sysconf('sms_type')" value="smsbao"}selected=""{/eq}>短信宝</option>
+                    <option value="smschinese" {eq name=":sysconf('sms_type')" value="smschinese"}selected=""{/eq}>网建</option>
+                    <option value="mysubmail" {eq name=":sysconf('sms_type')" value="mysubmail"}selected=""{/eq}>赛邮</option>
+                    <option value="internationalsms" {eq name=":sysconf('sms_type')" value="internationalsms"}selected=""{/eq}>赛邮(国际)</option>
+                </select>
+            </label>
+        </div>
+        {/eq}
+        <div class="layui-form-item">
+            <span class="color-green font-w7">VIP升级支付方式</span>
+            <div class="">
+                <input type="radio" name="vip_type" value="1" title="通道支付" {eq name=":sysconf('vip_type')" value="1"}checked=""{/eq}>
+                <input type="radio" name="vip_type" value="0" title="余额支付" {eq name=":sysconf('vip_type')" value="0"}checked=""{/eq}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">验证码失效时间</span>
+                <input name="verify_time" required placeholder="" value="{:sysconf('verify_time')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">验证码二次发送间隔</span>
+                <input name="verify_secondary" required placeholder="" value="{:sysconf('verify_secondary')}" class="layui-input">
+            </label>
+            <p class="help-block">单位秒</p>
+        </div>
+        <div class="layui-form-item">
+            <span class="color-green font-w7">邀请注册</span>
+            <div class="">
+                <input type="radio" name="invite_reg" value="1" title="开启" {eq name=":sysconf('invite_reg')" value="1"}checked=""{/eq}>
+                <input type="radio" name="invite_reg" value="0" title="关闭" {eq name=":sysconf('invite_reg')" value="0"}checked=""{/eq}>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">网站名称 Website</span>
+                <input name="site_name" required placeholder="请输入网站名称" value="{:sysconf('site_name')}" class="layui-input">
+            </label>
+            <p class="help-block">网站名称，将在浏览器的标签上显示名称</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">管理程序名称 Name</span>
+                <input name="app_name" required placeholder="请输入程序名称" value="{:sysconf('app_name')}" class="layui-input">
+            </label>
+            <p class="help-block">管理程序名称，在后台左上角标题处理显示</p>
+        </div>
+        <div class="layui-form-item">
+            <span class="color-green font-w7">浏览器图标 Browser</span>
+            <div class="relative block">
+                <img alt="icon" data-tips-image style="height:auto;max-height:42px;min-width:42px" src="{:sysconf('site_icon')}" />
+                <input type="hidden" name="site_icon" onchange="$(this).prev('img').attr('src', this.value)" value="{:sysconf('site_icon')}" class="layui-input">
+                <a class="margin-left-10" data-file="btn" data-type="ico,png" data-field="site_icon">上传图片</a>
+                <p class="help-block">建议上传 ICO 图标的尺寸为 128x128 <a href="http://www.favicon-icon-generator.com" target="_blank">ICON在线制作</a></p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">网站备案号 Miitbeian</span>
+                <input name="miitbeian" required placeholder="请输入网站备案号" value="{:sysconf('miitbeian')}" class="layui-input">
+            </label>
+            <p class="help-block">网站备案号，可以在<a target="_blank" href="http://beian.miit.gov.cn">备案管理中心</a>查询获取，将在登录页面下面显示</p>
+        </div>
+        <div class="layui-form-item">
+            <label class="relative block">
+                <span class="color-green font-w7">网站版权信息 Copyright</span>
+                <input name="site_copy" required placeholder="请输入版权信息" value="{:sysconf('site_copy')}" class="layui-input">
+            </label>
+            <p class="help-block">网站版权信息，在后台登录页面显示版本信息并链接到备案到信息备案管理系统</p>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">保存配置</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+        </div>
+    </div>
+</form>
+<script>
+window.form.render();
+</script>

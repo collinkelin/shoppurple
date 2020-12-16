@@ -1,0 +1,20 @@
+{extend name='admin@main'}
+{block name="content"}
+<form onsubmit="return false;" action="{:request()->url()}" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body think-box-shadow padding-left-40">
+        <div class="layui-form-item layui-form-text block">
+            <span class="label-required-prev color-green">内容</span>
+            <textarea  placeholder="" class="layui-textarea" name="code">{$code|default=''}</textarea>
+        </div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">提交</button>
+            <input type="hidden" name="_csrf_" value="{:systoken('admin/users/cs_code')}">
+        </div>
+    </div>
+</form>
+{/block}
+{block name='script'}
+<script>
+window.form.render();
+</script>
+{/block}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{:lang('My message')}</title>
+    <link rel="stylesheet" href="__ROOT__/public/css/style.min.css__VER__">
+    <link rel="stylesheet" href="__ROOT__/public/css/ui.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="__ROOT__/public/js/ui.js__VER__"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <style>
+    .msg-list li {
+        min-height: 2.5rem;
+        position: relative;
+    }
+
+    .msg-list li .txt {
+        line-height: 2.5rem;
+        padding: 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        border-bottom: 1px solid #eeeeee;
+
+    }
+
+    .msg-list li .txt i {
+        position: absolute;
+        width: .3rem;
+        height: .3rem;
+        border-radius: 50%;
+        background: red;
+        top: .7rem;
+        left: .5rem;
+    }
+
+    .cont {
+        line-height: 2rem;
+        display: none;
+        padding: 0 1rem;
+        font-size: .6rem;
+        color: #777777;
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .active .cont {
+        display: block;
+    }
+
+    .right {
+        width: 1rem;
+        height: 1.2rem;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+        background-image: url(__ROOT__/public/img/right.png);
+        background-size: cover;
+        background-repeat: no-repeat;
+        transition: all .1s linear;
+    }
+
+    .active span {
+        transform: rotate(90deg)
+    }
+
+    .txt p {
+        width: 70%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>{:lang('My message')}</span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section>
+    <div class="container">
+        <ul class="msg-list">
+            {volist name='info' id='vo'}
+            <li data='{$vo.id}' read='{$vo.rid}'>
+                <div class="txt">
+                    {empty name='vo.rid'}<i class='read'></i>{/empty}
+                    <p>{$vo.title}</p>
+                    <span class="right"></span>
+                </div>
+                <div class="cont">
+                    <p>{$vo.content|raw}</p>
+                    <p>{:lang('Notice time')}:{$vo.addtime|date='Y-m-d H:i'}</p>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    </section>
+</body>
+<script>
+$('.msg-list li').click(function() {
+    var _this = $(this);
+    if (!$(this).hasClass('active')) {
+        var id = $(this).attr('data');
+        var read = $(this).attr('read');
+        if (!read) {
+            $.ajax({
+                type: "POST",
+                url: "{:url('my/reads')}",
+                dataType: "json",
+                data: { 'id': id },
+                success: function(result) {
+                    _this.children('.txt').children('.read').remove();
+                },
+            });
+        }
+    }
+    $(this).toggleClass('active');
+
+})
+</script>
+
+</html>

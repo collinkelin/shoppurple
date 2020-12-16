@@ -1,0 +1,17 @@
+!.gitinore
+# 排除所有 .DS_Store 文件
+.DS_Store
+# target/
+# build/
+# Build/
+# bin/
+# logs/
+# 排除所有 .log 结尾的文件
+*.log
+*.pid
+# 排除所有 .class 文件
+# *.class
+
+/composer.lock
+/vendor
+/thinkphp

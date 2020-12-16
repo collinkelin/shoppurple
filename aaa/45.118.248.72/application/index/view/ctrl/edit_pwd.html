@@ -1,0 +1,119 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+    .form {
+            width: 90%;
+            margin: .5rem auto;
+        }
+
+        .form .form_title {
+            line-height: 1.5rem;
+        }
+
+        .input_box {
+            border: 1px solid #e2dcdc;
+            border-radius: 3px;
+        }
+
+        .input_box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            text-indent: 10px;
+        }
+
+        .input_box input::placeholder {
+            color: #a7a7a7;
+        }
+
+        .btn {
+            margin: 2rem auto;
+            width: 90%;
+            height: 2rem;
+            line-height: 2rem;
+            border-radius: 7px;
+            background-image: linear-gradient(to top,#E60816,#F8838B);
+            text-align: center;
+            color: white;
+        }
+    </style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('change Password')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <div class="form">
+            <p class="form_title">{:lang('old password')}:</p>
+            <div class="input_box">
+                <input type="password" placeholder="{:lang('Please enter the original password')}" id="old">
+            </div>
+        </div>
+        <div class="form">
+            <p class="form_title">{:lang('New password')}:</p>
+            <div class="input_box">
+                <input type="password" placeholder="{:lang('Please enter a new password')}" id="new">
+            </div>
+        </div>
+        <div class="form">
+            <p class="form_title">{:lang('Confirm password')}:</p>
+            <div class="input_box">
+                <input type="password" placeholder="{:lang('Enter new password again')}" id="again">
+            </div>
+        </div>
+        <div class="btn">{:lang('confirm')}</div>
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script>
+var submit = true
+$('.btn').click(function() {
+    var old_pwd = $('#old').val(),
+        new_pwd = $('#new').val(),
+        again = $('#again').val();
+    if (old_pwd == "") {
+        QS_toast.show(`{:lang('Please enter the original password')}`, true)
+    } else if (new_pwd == "") {
+        QS_toast.show(`{:lang('Please enter a new password')}`, true)
+    } else if (again == "") {
+        QS_toast.show(`{:lang('Enter new password again')}`, true)
+    } else if (again != new_pwd) {
+        QS_toast.show(`{:lang('Inconsistent passwords twice')}`, true)
+    } else {
+        if (submit) {
+            submit = false;
+            $.ajax({
+                url: urlPost("ctrl/set_pwd"),
+                type: "POST",
+                dataType: "JSON",
+                data: { old_pwd: old_pwd, new_pwd: new_pwd },
+                success: function(res) {
+                    console.log(res)
+                    if (res.code == 0) {
+                        QS_toast.show(`{:lang('Successfully modified')}`, true);
+                        var timer = setTimeout(function() {
+                            history.back(-1)
+                        }, 1500)
+                    } else {
+                        QS_toast.show(res.info, true);
+                        submit = true;
+                    }
+                },
+                error: function(err) {
+                    console.log(err);
+                    submit = true
+                }
+            })
+        }
+    }
+})
+</script>
+{/block}

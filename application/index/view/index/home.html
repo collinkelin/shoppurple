@@ -1,0 +1,600 @@
+{extend name='index@main'}
+{block name='css'}
+<link rel="stylesheet" type="text/css" href="__NPM__/swiper@3.1.7/dist/css/swiper.min.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/res/common/css/hui.min.css__VER__">
+<link rel="stylesheet" type="text/css" href="__GH__/yaseng/jquery.barrager.js@master/dist/css/barrager.css">
+{/block}
+{block name='style'}
+<style type="text/css">
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.swiper-container {
+    height: 130px;
+    width: 100%;
+    padding-bottom: 48%;
+    height: 0;
+    position: relative;
+}
+
+.swiper-wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.swiper-slide{
+    padding: 5px 0;
+}
+.swiper-slide img{
+    height: 130px;
+    width: 95%;
+    margin: 0 auto;
+    border-radius: 20px;
+    display: block;
+}
+.swiper-pagination-bullet {
+    width: .25rem;
+    height: .25rem;
+    background: white;
+    opacity: 1;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background: rgb(255, 210, 2);
+}
+
+.flex_container {
+    margin: .0rem 0;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding: 0 1.3rem;
+    font-size: .7rem;
+    text-align: center;
+    background: #ffffff;
+}
+
+.icon_cont {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.tab_nav {
+    height: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid #f7f7f7;
+    border-bottom: 1px solid #f7f7f7;
+    padding: 0 .5rem;
+}
+
+.tab_nav li {
+    margin: auto 0;
+    height: 1.9rem;
+    line-height: 1.9rem;
+}
+
+.tab_nav li.nav_active {
+    position: relative;
+    color: #00bcd4;
+    border-bottom: 2px solid #00bcd4;
+}
+
+.icon_cont>i {
+    color: #fff;
+    font-size: 1.43rem;
+    display: block;
+    width: 1.4rem;
+    height: 1.4rem;
+    margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.flex_container .flex_item:nth-child(1) .icon_cont>i {
+  
+}
+
+.flex_container .flex_item:nth-child(3) .icon_cont>i {
+  
+}
+
+.tab_cont>div {
+    display: none;
+}
+
+.goQiangDan .hui-media-content em {
+    position: relative;
+    top: 0px;
+    right: -60px;
+}
+
+.hui-media-list li {
+    max-height: 150px;
+    padding: 5px;
+}
+
+.hui-media-list img {
+    width: 90%
+}
+
+.pop-background {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    top: 0px;
+    z-index: 999999;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.flex {
+    width: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: nowrap;
+}
+
+.fw {
+    flex-wrap: wrap;
+}
+
+.ggnotice {
+    width: 70%;
+    max-width: 400px;
+    height: auto;
+    min-height: 220px;
+    align-items: flex-start;
+    align-content: flex-start;
+    position: relative;
+    background: #5534AA;
+    background-image: linear-gradient(to top,#9677EC,#5534AA);
+    border-radius: 4%;
+    color: #fff;
+}
+.ggnotice p{
+    color: #fff;
+}
+.ggnotice-img {
+    width: 100%;
+    transform: translateY(-19.6%);
+}
+
+.ggnotice-html {
+    width: 90%;
+    min-height: 100px;
+    color: #777;
+    line-height: 24px;
+    font-size: 14px;
+    margin-top: -20px;
+    padding: 10px 5%;
+}
+.ggnotice-html p{
+    color: #fff;
+}
+
+.ggnotice-html .content {
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+}
+
+.close-img {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    bottom: 0px;
+    left: 50%;
+    transform: translate(-50%, 150%);
+}
+
+.page_index_ckxxnr {
+    display: block;
+    width: 100%;
+    height: 2.5rem;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 2.5rem;
+    bottom: 0px;
+    color: rgb(165, 32, 250);
+}
+
+/**/
+.row .col {
+    float: left;
+    box-sizing: border-box;
+}
+
+.row .col.s6 {
+    width: 50%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+    text-align: center;
+}
+
+.row .col.s8 {
+    width: 66.6666666667%;
+    margin-left: auto;
+    left: auto;
+    right: auto;
+}
+
+.chart-child .s8 span {
+    font-size: 10px;
+}
+
+
+/*Home Project Statistics*/
+.home-chart h3 {
+    font-size: 18px;
+}
+
+.home-chart span,
+.home-chart p {
+    color: #000;
+}
+
+.chart-child {
+   /* background: linear-gradient(90deg, #8570d8 30%, #fff);*/
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 5px !important;
+}
+
+.chart-child:nth-of-type(2) {
+  
+    margin-bottom: 10px;
+}
+
+.chart-child:nth-of-type(3) {
+   
+}
+
+.chart-child:nth-of-type(4) {
+  
+}
+
+.chart-child .s8,
+.chart-child h3 {
+    color: #fff;
+}
+
+.chart-child .s8 span {
+    font-size: 10px;
+    color: #fff;
+}
+
+.chart-child .s8 p {
+    font-size: 12px;
+    margin: 0;
+    color: #fff;
+}
+
+.chart-child .s4 img {
+    width: 40px;
+    height: 40px;
+    margin-top: 9px;
+    border-radius: 50%;
+}
+
+.chart-child .s8,
+.chart-child h3 {
+    color: #fff !important;
+}
+
+.hui-media-list-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.layui-m-layer .layui-m-layercont{
+    padding: 15px 10px;
+    height: 70vh;
+    overflow-y: auto;
+    text-align: left;
+}
+/*Home Project Statistics*/
+</style>
+{/block}
+{block name='main'}
+<header>
+    <span>{:sysconf('site_name')}</span>
+</header>
+<section style="padding-bottom: 30px;">
+    <div style="background:#ffffff;">
+    <div class="pop-background flex" id="myModal" style="top: -4000px;">
+        <div class="ggnotice flex fw" style="max-height:300px">
+            <img src="__ROOT__/public/new_img/tc.png" class="ggnotice-img" style="height:100%;width:102%;max-width: 102%;max-height: 100%;max-height:100px;margin-left:-5px">
+            <div class="ggnotice-html">
+                <p style="margin-left:0cm; margin-right:0cm; text-align:center"><span style="font-size:12pt"><span style="font-family:宋体;color:#fff"><strong><span style="font-size:13.5pt"><span class="modelTitle" style="font-family:宋体;color:#fff">{$notice.title} </span></span></strong></span></span></p>
+                <p class="content">
+                    <?php echo strip_tags($notice['content']); ?>
+                </p>
+                <p><a class="page_index_ckxxnr" style="color:#fff" href="/index/support/detail/6.html?id=6">{:lang('View details')}</a></p>
+            </div>
+            <img src="__ROOT__/res/common/images/close_notice.png" class="close-img">
+        </div>
+    </div>
+    <div class="hui-wrap">
+        <div class="container" style="margin-top:0px;padding-bottom: 5px;height: 140px;">
+            <div class="swiper-container ">
+                <div class="swiper-wrapper ">
+                    {if $banner}
+                    {volist name='banner' id='vo'}
+                    <div class="swiper-slide">
+                        <a href="{$vo.url}">
+                            <img src="{$vo.image}" alt="">
+                        </a>
+                    </div>
+                    {/volist}
+                    {else\}
+                    {/if}
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    
+        <style>
+            .news_gg_icon{
+                width:45px; 
+                height:45px;
+                position: relative;
+                left: 20px;
+                top: 18px;
+            }
+        </style>
+        <!--公告-->
+         <div style="background:#EEEEEE; padding:0px 10px; margin:15px;border-radius:25px 25px 25px 25px;height:35px;" class="hui-flex">
+            <div style="height:75px; width:75px; margin-top:-30px; margin-left:-20px;">
+                <img class="news_gg_icon" src="/public/new_img/gg_icon.png" />
+            </div>
+            <div class="hui-scroll-news" id="scrollnew1">
+                {volist name='conveys' id='vo'}
+                <div class="hui-scroll-news-items" style="color:#777">{$vo.con}</div>
+                {/volist}
+            </div>
+        </div>
+        
+        <!--公告结束-->
+        <!--个人信息-->
+        <div class="index_my_infos">
+            <div class="index_my_infos_item">
+                <p>{:lang('Profit')}</p>
+                {$sell_y_num|formatNumber}
+            </div>
+            <div class="index_my_infos_item">
+                <p>{:lang('Balance')}</p>
+                {$userinfo.balance|formatNumber}
+            </div>
+            <div class="index_my_infos_item">
+                <p>{:lang('Freeze')}</p>
+                {$userinfo.freeze_balance|formatNumber}
+            </div>
+            <div class="index_my_infos_item" style="padding-top:4px">
+                <a href="{:url('recharge/recharge_before')}">
+                    <div class="index_my_infos_btns">
+                        {:lang('Recharge')}
+                    </div>
+                </a>
+                <a href="{:url('ctrl/deposit_before')}">
+                    <div class="index_my_infos_btns">
+                        {:lang('Withdraw')}
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--个人信息end-->
+      
+            <div class="containera" style=" width:90%; height:115px;margin:0 auto;padding:.5rem 0;margin-bottom:0px">
+                <div style="width:100%; height:50px; display: flex;" class="row">
+               <div style="width:50%;height:100%; ">
+                   <div style="color:#fff; text-align:center;font-size:15px; " >{:lang('Todays products')}</div>
+                  <div style=" text-align:center;" ><span id="taskCounta" style="color:#fff; font-size:17px;    margin-top:3px;display:block">99</span></div>
+               </div>
+               
+                <div style="width:50%;height:100%; ">
+                   <div style="color:#fff; text-align:center;font-size:15px; " >{:lang('Todays users')}</div>
+                  <div style=" text-align:center;" ><span id="memberCount" style="color:#fff; font-size:17px;margin-top:3px;display:block">99</span></div>
+               </div>
+               
+                </div>
+    <div style="width:100%; height:50px; display: flex;" class="row">
+               <div style="width:50%;height:100%; ">
+                   <div style="color:#fff; text-align:center;font-size:15px; " >{:lang('Todays amount')}</div>
+                  <div style=" text-align:center;" ><span id="moneyCount" style="color:#fff; font-size:17px;margin-top:3px;display:block">99</span></div>
+               </div>
+               
+                <div style="width:50%;height:100%; ">
+                   <div style="color:#fff; text-align:center;font-size:15px; " >{:lang('Todays turnover')}</div>
+                  <div style=" text-align:center;" ><span id="applyCount" style="color:#fff; font-size:17px;margin-top:3px;display:block">99</span></div>
+               </div>
+               
+                </div>
+            </div>
+      
+       <div class="new_goodlist">
+           {foreach $cate as $key=>$vo}
+           <a  class="goQiangDan" data-id="1" data-price="{$balance}" data-min="{$vo.min}" onclick="return hoto(this)" href="{:url('rot_order/index',array('type'=>1))}?type={$vo.id}">
+           <div class="new_goodlist_item">
+               <div class="goods_image">
+                   <img src="{$vo.cate_pic}" />
+               </div>
+               <div class="goodlist_title">
+                   {$vo.name}
+                   <p style="color:#fff;font-size:.6rem">{:lang('Commission')}:{$vo.bili*100}%</p>
+               </div>
+               <div class="good_info_item">
+                   {$vo.cate_info}
+               </div>
+           </div>
+           </a>
+           {/foreach}
+       </div>
+       
+       
+        
+    </div>
+    </div>
+</section>
+{/block}
+{block name='js'}
+<script src="__GH__/yaseng/jquery.barrager.js@master/dist/js/jquery.barrager.min.js"></script>
+<script src="__GH__/shenhai/HUI@master/js/hui.js" type="text/javascript" charset="utf-8"></script>
+<script src="__NPM__/swiper@3.1.7/dist/js/swiper.min.js"></script>
+{include file="public/floor" /}
+{/block}
+{block name='script'}
+<script type="text/javascript">
+var mySwiper = new Swiper('.swiper-container', {
+    loop: true,
+    autoplay: 3000,
+    speed: 1500,
+    spaceBetween: 0,
+    pagination: {
+        el: '.swiper-pagination',
+    }
+})
+$(function() {
+    hui.scrollNews(scrollnew1);
+    // hui.scrollNews(scrollnew2, 8000);
+    $('#hui-footer a').eq(0).addClass("floor-active");
+    getTonji();
+
+    tips();
+    setInterval(function() { tips(); }, 5000);
+})
+var tid = 0;
+
+function tips() {
+    $.get("{:url('tip')}", function(result) {
+        if (result.data) {
+            if (tid != result.data.id) {
+                tid = result.data.id;
+                layer.open({
+                    // anim: 'up',
+                    title: [result.data.title,'background-color: #FF4351; color:#fff;'],
+                    content: result.data.content,
+                    btn: [`{:lang('confirm')}`],
+                    shadeClose: false,
+                    yes: function(index) {
+                        if (result.data.url)
+                            location.href = result.data.url
+                        layer.close();
+                    },
+                    no: function() {
+                        layer.close();
+                    }
+                });
+            }
+        }
+    });
+}
+
+function getTonji() {
+    $.getJSON("/index/Index/getTongji", function(data) {
+        console.log(data)
+        $('#taskCounta').html(data.data.goods)
+        $('#memberCount').html(data.data.user)
+        $('#moneyCount').html(data.data.price)
+        $('#applyCount').html(data.data.num)
+    });
+}
+</script>
+<script type="text/javascript">
+function hoto(obj) {
+    var price = $(obj).data('price');
+    var min = $(obj).data('min');
+
+    if (price < min) {
+        alert("{:lang('Insufficient balance to enter the rush order')}");
+        return false;
+    }
+}
+</script>
+<script>
+var modal = document.getElementById('myModal');
+
+$(document).ready(function() {
+    console.log($('.modelTitle').text())
+    if (getCookie('notice') == '23' || $('.modelTitle').text() == "") {
+        modal.style.display = "none";
+    } else {
+        modal.style.top = "0";
+    }
+});
+
+var span = document.getElementsByClassName("close-img")[0];
+
+span.onclick = function() {
+    modal.style.display = "none";
+    setCookie('notice', 23);
+};
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+        setCookie('notice', 23);
+    }
+}
+</script>
+<script>
+var cHeight = $(window).height();
+$(function() {
+    //startBarrager();
+});
+
+function startBarrager() {
+
+    $.ajaxSettings.async = false;
+    $.getJSON("/index/Index/getDanmu", function(data) {
+
+        var looper_time = 3 * 1000;
+        var items = data;
+        var total = data.length;
+        var run_once = true;
+        var index = 0;
+        barrager();
+
+        function barrager() {
+            if (run_once) {
+                looper = setInterval(barrager, looper_time);
+                run_once = false;
+            }
+
+            items[index].bottom = getRandom(cHeight - 250, cHeight - 40);
+            $('body').barrager(items[index]);
+            index++;
+            if (index == total) {
+                clearInterval(looper);
+                return false;
+            }
+        }
+    });
+}
+
+function getRandom(iStart, iEnd) {
+    var iChoice = iStart - iEnd + 1;
+    return Math.abs(Math.floor(Math.random() * iChoice)) + iStart;
+}
+</script>
+{/block}

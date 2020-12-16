@@ -1,0 +1,140 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0">
+    <title>{:lang('Support')}</title>
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/res/common/css/hui.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/userstyle.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/base.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/statics/css/user.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <style>
+        .btn{
+            width: 50%;
+            line-height: 1.4rem;
+            font-size: .56rem;
+            color: #fff;
+            text-align: center;
+            background-color: #7669fd;
+            border-radius: .7rem;
+            display: block;
+            margin: 0 auto;
+        }
+        .kfcon{
+            padding: 5px;
+            border-radius: 10px;
+            background-image: linear-gradient(to top,#9677EC,#7753DB);
+            width: 100%;
+            text-align: center;
+        }
+        .kfcon .title{
+            color: #ff8405;
+            font-size: 15px;
+        }
+        .kfcon .qrcode{
+            width: 130px;
+            height: auto;
+            margin: auto;
+        }
+        .transfer-save{
+            width: 100%;
+            overflow: hidden;
+            /* position: absolute; */
+            /* background-color: #7669fd; */
+            left: 0;
+            bottom: .5rem;
+            margin-bottom: 10px;
+        }
+
+        .jq22-coll-title h2 {
+            position: relative;
+            font-size: 15px;
+            font-weight: normal;
+            color: #212121;
+            padding-left: 0.5rem;
+        }
+        .jq22-coll-title h2:after {
+            content: '';
+            position: absolute;
+            z-index: 0;
+            top: 3px;
+            left: 0;
+            width: 3px;
+            height: 15px;
+            background: #e66c67;
+            border-radius: 5px;
+        }
+        .jq22-coll-title {
+            padding: 15px;
+        }
+        .mm_imgs{
+            height: 180px;
+            width: 80px;
+            right: 35px;
+            bottom: 10px;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>{:lang('Support')}</span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section class="container" style="padding-bottom: 80px">
+        <div class="kefu_new_text">
+            客服中心
+        </div>
+        <div class="text_ifnos">{:lang('Help documentation')}</div>
+        <div class="no-content" style="padding:0 1rem;position: relative;    overflow: initial;">
+            <img class="mm_imgs" src="/public/new_img/mm.png">
+            {foreach $list as $key=>$vo}
+                {notempty name="vo.url"}
+                <div class="transfer-save" style="">
+                    {if $vo.type eq 1}
+                    <a href="{:url('live')}?id={$vo.id}" class="btn" style="" id="lxkf">{$vo.title}</a>
+                    {else}
+                    <a href="{$vo.url}" class="btn" style="" id="lxkf">{$vo.title}:{$vo.account}</a>
+                    {/if}
+                </div>
+                {else}
+                <p>
+                    <div class="bg-yellow margin-top kfcon" style="">
+                        {notempty name="vo.qr_code"}
+                        <p><img class="qrcode" src="{$vo.qr_code}" alt=""></p>
+                        {/notempty}
+                    </div>
+                </p>
+                {/notempty}
+            {/foreach}
+        </div>
+        <div class="jq22-coll-title" style="padding:10px 15px">
+            <div class="kefu_info_btns">{:lang('Help documentation')}</div>
+        </div>
+        <div class="article-box">
+            {foreach $msg as $key=>$vo}
+            <a href="{:url('detail',array('id'=>$vo.id))}?id={$vo.id}" class="article-list">
+                <h3 style="color:#000;font-weight:600">{$vo.title}</h3>
+            </a>
+            {/foreach}
+            <input type="hidden" name="kefu" value="">
+        </div>
+    </section>
+    {include file="public/floor" /}
+    <script type="text/javascript">
+    $(function() {
+        $('#hui-footer a').eq(2).addClass("floor-active")
+    })
+    </script>
+</body>
+
+</html>

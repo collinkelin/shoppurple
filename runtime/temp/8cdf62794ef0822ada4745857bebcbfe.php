@@ -1,0 +1,24 @@
+<?php /*a:2:{s:73:"/www/wwwroot/www.oabuhps.cn/application/admin/view/langs/langs_index.html";i:1593122096;s:60:"/www/wwwroot/www.oabuhps.cn/application/admin/view/main.html";i:1593205496;}*/ ?>
+<div class="layui-card layui-bg-gray"><?php if(!(empty($title) || (($title instanceof \think\Collection || $title instanceof \think\Paginator ) && $title->isEmpty()))): ?><div class="layui-card-header layui-anim layui-anim-fadein notselect"><span class="layui-icon layui-icon-next font-s10 color-desc margin-right-5"></span><?php echo htmlentities((isset($title) && ($title !== '')?$title:'')); ?><div class="pull-right"><?php if(auth("add_message_tpl")): ?><!-- <button data-open='<?php echo url("add_message_tpl"); ?>' data-title="添加模版" class='layui-btn'>添加模版</button> --><?php endif; ?></div></div><?php endif; ?><div class="layui-card-body layui-anim layui-anim-upbit"><div class="think-box-shadow"><fieldset><legend>条件搜索</legend><form class="layui-form layui-form-pane form-search" action="<?php echo request()->url(); ?>" lay-filter="search-form" onsubmit="return false" method="get" autocomplete="off"><div class="layui-form-item layui-inline"><label class="layui-form-label">语言选择</label><div class="layui-input-inline"><select name="range" id="selectList"><option value="" test class="">所有</option><?php foreach($lang_list as $key=>$vo): ?><option value="<?php echo htmlentities($key); ?>" test class=""><?php echo htmlentities($vo); ?></option><?php endforeach; ?></select></div></div><div class="layui-form-item layui-inline"><label class="layui-form-label">搜索类型</label><div class="layui-input-inline"><select name="key" id="selectList"><option value="name" test class="">索引搜索</option><option value="content" test class="">内容搜索</option></select></div></div><div class="layui-form-item layui-inline"><label class="layui-form-label">搜索内容</label><div class="layui-input-inline"><input name="value" value="" placeholder="请输入搜索内容" class="layui-input"></div></div><div class="layui-form-item layui-inline"><button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button></div></form></fieldset><script>
+    form.val("search-form", <?php echo $search; ?>);
+    form.render()
+    </script><table class="layui-table margin-top-15" lay-skin="line"><?php if(!(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty()))): ?><thead><tr><th class='text-left nowrap'>ID</th><th class='text-left nowrap'>语言</th><th class='text-left nowrap'>索引</th><th class='text-left nowrap'>内容</th><th class='text-left nowrap'>操作</th></tr></thead><?php endif; ?><tbody><?php foreach($list as $key=>$vo): ?><tr><td class='text-left nowrap'><?php echo htmlentities($vo['id']); ?></td><td class='text-left nowrap'><?php echo htmlentities($lang_list[$vo['range']]); ?></td><td class='text-left nowrap'><a href="/admin.html#/admin/langs/langs_index.html?spm=m-65-67-88&range=&key=name&value=<?php echo htmlentities($vo['name']); ?>" title=""><?php echo htmlentities($vo['name']); ?></a></td><td class='text-left nowrap hidden-beyond'><?php echo htmlentities($vo['content']); ?></td><td class='text-left nowrap'><?php if(auth("langs_edit")): if($vo['range'] == 'zh-cn'): ?><a class="layui-btn layui-btn-xs layui-btn" data-open="<?php echo url('langs_add',['id'=>$vo['id']]); ?>" data-value="id#<?php echo htmlentities($vo['id']); ?>" style='background:green;'>添加其它语言</a><?php endif; ?><a class="layui-btn layui-btn-xs layui-btn" data-open="<?php echo url('langs_edit',['id'=>$vo['id']]); ?>" data-value="id#<?php echo htmlentities($vo['id']); ?>" style='background:green;'>编辑</a><?php if($vo['range'] != 'zh-cn'): ?><a class="layui-btn layui-btn-xs layui-btn" style='background:red;' onClick="langs_del(<?php echo htmlentities($vo['id']); ?>)">删除</a><?php endif; ?><?php endif; ?></td></tr><?php endforeach; ?></tbody></table><?php if(empty($list) || (($list instanceof \think\Collection || $list instanceof \think\Paginator ) && $list->isEmpty())): ?><span class="notdata">没有记录哦</span><?php else: ?><?php echo (isset($pagehtml) && ($pagehtml !== '')?$pagehtml:''); ?><?php endif; ?></div><script>
+function langs_del(id) {
+    layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" }, function(index) {
+        $.ajax({
+            type: 'POST',
+            url: "<?php echo url('langs_del'); ?>",
+            data: {
+                'id': id
+            },
+            beforeSend: function(request) {
+                request.setRequestHeader("User-Token-Csrf", "<?php echo systoken('admin/langs/langs_del'); ?>");
+            },
+            success: function(res) {
+                layer.msg(res.info, { time: 2500 });
+                location.reload();
+            }
+        });
+    }, function() {});
+}
+</script></div></div>

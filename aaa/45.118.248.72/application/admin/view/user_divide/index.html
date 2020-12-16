@@ -1,0 +1,68 @@
+{extend name='main'}
+{block name="button"}
+{if auth("add")}
+<button data-modal='{:url("add")}' data-title="添加等级" class='layui-btn'>添加等级</button>
+{/if}
+{/block}
+{block name="content"}
+<div class="think-box-shadow">
+    <table class="layui-table margin-top-15" lay-filter="tab" lay-skin="line">
+        {notempty name='list'}
+        <thead>
+            <tr>
+                <th lay-data="{field:'id'}" class='text-left nowrap'>ID</th>
+                <th lay-data="{field:'level'}" class='text-left nowrap'>上线层级</th>
+                <th lay-data="{field:'divide'}" class='text-left nowrap'>分成比例</th>
+                <th lay-data="{field:'edit',width:280,fixed: 'right'}" class='text-left nowrap'>操作</th>
+            </tr>
+        </thead>
+        {/notempty}
+        <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td class='text-left nowrap'>{$vo.id}</td>
+                <td class='text-left nowrap'>{$vo.level}</td>
+                <td class='text-left nowrap'>{$vo.divide}</td>
+                <td class='text-left nowrap'>
+                    <a data-dbclick class="layui-btn layui-btn-xs" data-title="会员等级编辑" data-modal='{:url("edit")}?id={$vo.id}'>编辑</a>
+                    <a class="layui-btn layui-btn-xs layui-btn" onClick="del({$vo.id})" style='background:red;'>删除</a>
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    <script>
+    function del(id) {
+        layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" }, function(index) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('del')}",
+                data: {
+                    'id': id,
+                },
+                beforeSend: function(request) {
+                    request.setRequestHeader("User-Token-Csrf", "{:systoken('admin/users/del')}");
+                },
+                success: function(res) {
+                    layer.msg(res.info, { time: 2500 });
+                    location.reload();
+                }
+            });
+        }, function() {});
+    }
+    </script>
+    <script>
+    var table = layui.table;
+    //转换静态表格
+    var limit = Number('{$Think.get.limit}');
+    if (limit == 0) limit = 20;
+    table.init('tab', {
+        cellMinWidth: 120,
+        skin: 'line,row',
+        size: 'lg',
+        limit: limit
+    });
+    </script>
+    {empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
+</div>
+{/block}

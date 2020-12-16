@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="__ROOT__/public/css/style.min.css__VER__">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="__NPM__/chlayer@3.1.5/dist/mobile/need/layer.css">
+    <script src="__NPM__/chlayer@3.1.5/dist/mobile/layer.js"></script>
+    <script src="__ROOT__/public/js/ui.js__VER__"></script>
+    <link rel="stylesheet" href="__ROOT__/public/css/ui.min.css__VER__">
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <title>Document</title>
+    <style>
+    img {
+        width: 100%;
+    }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span></span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section>
+    <div class="container">
+    </div>
+    </section>
+</body>
+<script>
+$(function() {
+    const type = sessionStorage.getItem("type")
+    if (type == 1) {
+        $('header>span').html(`{:lang('Introduction')}`)
+    } else if (type == 2) {
+        $('header>span').html(`{:lang('Rules')}`)
+    } else if (type == 3) {
+        $('header>span').html(`{:lang('Cooperation')}`)
+    } else if (type == 4) {
+        $('header>span').html(`{:lang('Problem')}`)
+    }
+    $.ajax({
+        url: urlPost('index/get_msg'),
+        type: 'POST',
+        dataType: 'json',
+        data: { type: type },
+        success: function(res) {
+            console.log(res)
+            $('.container').append("${res.data.content}")
+        },
+        error: function(err) { console.log(err) }
+    })
+})
+</script>
+
+</html>

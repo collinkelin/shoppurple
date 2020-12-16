@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+    <title>{:lang('order details')}</title>
+    <link rel="stylesheet" href="__ROOT__/public/css/style.min.css__VER__">
+    <link rel="stylesheet" href="__ROOT__/public/css/ui.min.css__VER__">
+    <link rel="stylesheet" type="text/css" href="__NPM__/chlayer@3.1.5/dist/mobile/need/layer.css">
+    <link rel="stylesheet" type="text/css" href="__NPM__/font-awesome@4.7.0/css/font-awesome.min.css">
+    <script src="__NPM__/jquery@3.4.1/dist/jquery.min.js" type="text/javascript"></script>
+    <script src="__ROOT__/public/js/ui.js__VER__"></script>
+    <script src="__NPM__/chlayer@3.1.5/dist/mobile/layer.js"></script>
+    <script src="__ROOT__/public/js/common.min.js__VER__"></script>
+    <style>
+        .container>div {
+            padding: .5rem 1rem;
+        }
+
+        .site {
+            border-bottom: .3rem solid rgb(248, 242, 242);
+        }
+
+        .site>div:first-child {
+            display: flex;
+            justify-content: space-between;
+            flex-direction: row;
+            margin-bottom: .5rem;
+        }
+
+        .site>div:last-child {
+            position: relative;
+        }
+
+        .site>div:last-child::after {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            position: absolute;
+            right: 0;
+            background-image: url(__ROOT__/public/img/right.png);
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .location {
+            width: 75%;
+            display: inline-block;
+        }
+
+        .order {
+            font-size: .5rem;
+            border-bottom: .3rem solid rgb(248, 242, 242);
+        }
+
+        .order_info {
+            margin-top: .5rem;
+            display: flex;
+        }
+
+        .info_img {
+            width: 3rem;
+            height: 3rem;
+            background: #eeeeee;
+        }
+
+        .info_data {
+            max-width: 55%;
+            margin: 0 0 0 1rem;
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+        }
+
+        .info_store,
+        .money {
+            color: #FDC003;
+        }
+
+        .info_money {
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .data_cont {
+            border-bottom: .3rem solid rgb(248, 242, 242);
+            text-align: right;
+        }
+
+        .data_cont>p {
+            margin-bottom: .2rem;
+        }
+
+        .container>p {
+            border-bottom: .1rem solid rgb(248, 242, 242);
+            text-align: right;
+            padding: .3rem 1rem;
+        }
+
+        .data_cont>p span:last-child {
+            color: #FDC003;
+            margin-left: .1rem;
+        }
+
+        .btn {
+            margin: 1.2rem 1rem;
+            height: 2.2rem;
+            line-height: 2.2rem;
+            border-radius: 5px;
+            background: #FDC003;
+            text-align: center;
+            color: white;
+            padding: 0 !important;
+        }
+
+        .input-radiu {
+            width: 70%;
+            border: 1px solid #b9adad;
+            border-radius: 50px;
+            margin: auto;
+            height: 1.5rem;
+        }
+
+        .input-radiu input {
+            border: none;
+            outline: none;
+            background: transparent;
+            height: 100%;
+            text-align: center;
+            color: #777777;
+        }
+
+        .QS-toast {
+            z-index: 19891016 !important;
+        }
+
+        .share {
+            background-color: rgba(0, 0, 0, .7);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 1000;
+            display: none;
+        }
+
+        #container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .confirm {
+            margin: auto;
+            background: white;
+            width: 90%;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .box {
+            padding: 50px 30px;
+            line-height: 22px;
+            text-align: center;
+        }
+
+        .btn-cont {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            border-top: 1px solid #D0D0D0;
+            background-color: #F2F2F2;
+            display: flex;
+        }
+
+        .btn-cont>div {
+            width: 50%;
+            text-align: center;
+            font-size: .7rem;
+        }
+
+        #on {
+            color: #40AFFE;
+            border-left: 1px solid #d0d0d0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a class="back" href="javascript:history.go(-1);">
+            <i class="fa fa-chevron-left" aria-hidden="true"></i>
+        </a>
+        <span>{:lang('order details')}</span>
+        <a class="back" href="/">
+            <i class="fa fa-home" aria-hidden="true"></i>
+        </a>
+    </header>
+    <section>
+    <div class="container">
+        <div class="site">
+            <div>
+                <p>{:lang('Consignee name')}:<span class="user">-</span></p>
+                <p class="tel">-</p>
+            </div>
+            <div>{:lang('Shipping address')}: <span class="location">-</span></div>
+        </div>
+        <div class="order">
+            <div class="order_num">-</div>
+            <div class="order_info">
+                <div class="info_img"><img src="" alt=""></div>
+                <div class="info_data">
+                    <p class="info_name">-</p>
+                    <p class="info_store">-</p>
+                </div>
+                <div class="info_money">
+                    <p class="money" style="margin-bottom: .5rem;">{:lang('symbol')}<span class="item-money">-.--</span></p>
+                    <p>x<span class="info_num">-</span></p>
+                </div>
+            </div>
+        </div>
+        <p><span class="data_title">{:lang('Your available balance')}:</span><span class="usable_num">{:lang('symbol')}<span class="item-money">-.--</span></span></p>
+        <div class="data_cont">
+            <p><span class="data_title">{:lang('order amount')}:</span><span class="data_money">{:lang('symbol')}<span class="item-money">-.--</span></span></p>
+            <p><span class="data_title">{:lang('Commission')}:</span><span class="brokerage">{:lang('symbol')}<span class="item-money">-.--</span></span></p>
+            <p><span class="data_title">{:lang('Estimated return')}:</span><span class="return">{:lang('symbol')}<span class="item-money">-.--</span></span></p>
+            <p><span class="data_title">{:lang('Paid')}:</span><span class="paid">{:lang('symbol')}<span class="item-money">-.--</span></span></p>
+            <p><span class="data_title">{:lang('Still need to pay')}:</span><span class="difference">{:lang('symbol')}<span class="item-money">-.--</span></span></p>
+        </div>
+        <div class="btn">{:lang('Submit orders')}</div>
+    </div>
+    <div class="share">
+        <div id="container">
+            <div class="confirm">
+                <div class="box">
+                    <div class='input-radiu'><input placeholder="{:lang('Please fill in the transaction password')}" type='password' id='pwd2' class='int'> </div>
+                </div>
+                <div class="btn-cont">
+                    <div id="off">{:lang('cancel')}</div>
+                    <div id="on">{:lang('confirm')}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+</body>
+<script>
+var oid = "{$oid}", // order ID
+    add_id = "",
+    submit = true
+$(function() {
+    $.ajax({
+        url: urlPost("order/order_info"),
+        type: "POST",
+        dataType: "JSON",
+        data: { id: oid },
+        success: function(res) {
+            console.log(res)
+            var data = res.data,
+                total = ((Number(data.num) * 100 + Number(data.commission) * 100) / 100).toFixed(2)
+            if (res.code == 0) {
+                $('.user').html(data.name);
+                $('.tel').html(data.tel);
+                $('.location').html(data.address);
+                $('.info_img>img').attr('src', data.goods_pic);
+                $(".order_num").html(data.oid);
+                $(".info_name").html(data.goods_name);
+                $(".info_store").html(data.shop_name);
+                $('.info_num').html(data.goods_count);
+                $('.money>span').html(milliFormat(data.goods_price));
+                $(".data_money>span").html(milliFormat(data.num));
+                $('.usable_num>span').html(milliFormat(data.balance));
+                $('.brokerage>span').html(milliFormat(data.commission));
+                $('.return>span').html(milliFormat(total));
+                $('.paid>span').html(milliFormat(data.paid));
+                $('.difference>span').html(milliFormat(data.difference));
+                add_id = data.add_id;
+            }
+        },
+        error: function(err) { console.log(err) }
+    })
+})
+
+$("#pwd2").on('blur', function() {
+    document.body.scrollIntoView(true);
+})
+
+// 选择收货地址
+$(".site").click(function() {
+    location.href = "./receive_site.html"
+})
+
+$("#off").click(function() {
+    $('.share').hide()
+});
+
+
+var zhujiTime = "{:config('deal_zhuji_time')}";
+var shopTime = "{:config('deal_shop_time')}";
+
+zhujiTime = zhujiTime * 1000;
+shopTime = shopTime * 1000;
+
+// 提交订单
+$(".btn").click(function() {
+    // $('.share').show()
+    // 弱智需求要15秒提交成功
+    var i = 0;
+    layer.open({
+        type: 2,
+        content: `{:lang('Order submission')}`,
+        time: zhujiTime,
+        shadeClose: false,
+    });
+    var timer = setInterval(function() {
+        i++;
+        if (i == 1) {
+            layer.open({
+                type: 2,
+                content: `{:lang('Remote host is being assigned')}`,
+                time: zhujiTime,
+                shadeClose: false,
+            })
+        } else if (i == 2) {
+            layer.open({
+                type: 2,
+                content: `{:lang('Waiting for a response from the merchant system')}`,
+                time: shopTime,
+                shadeClose: false,
+            })
+            var ajaxT = setTimeout(function() {
+                $.ajax({
+                    url: urlPost("order/do_order"),
+                    type: "POST",
+                    dataType: "JSON",
+                    data: { oid: oid, add_id: add_id },
+                    success: function(res) {
+                        console.log(res)
+                        if (res.code == 0) {
+                            QS_toast.show(`{:lang('Orders submitted successfully')}`, true);
+                            clearInterval(timer)
+                            var linkTime = setTimeout(function() {
+                                location.href = res.url
+                            }, 1800);
+                        } else {
+                            if(res.code == 5){
+                                layer.open({
+                                    anim: 'up',
+                                    content: res.info,
+                                    btn: [`{:lang('confirm')}`, `{:lang('cancel')}`],
+                                    shadeClose: false,
+                                    yes: function(index) {
+                                        if(res.url)
+                                            location.href = res.url
+                                        layer.closeAll();
+                                    },
+                                    no: function() {
+                                        layer.closeAll();
+                                    }
+                                });
+                            } else {
+                                QS_toast.show(res.info, true);
+                                if(res.url){
+                                    var linkTime = setTimeout(function() {
+                                        location.href = res.url
+                                    }, 1800);
+                                }else{
+                                    var timer = setInterval(function() {
+                                        location.href = location.href
+                                    }, 3000);
+                                }
+                            }
+                        }
+                        sumbit = true;
+                    },
+                    error: function(err) { console.log(err);
+                        sumbit = true;
+                    }
+                })
+            }, shopTime)
+        }
+    }, zhujiTime)
+})
+
+$("#on").click(function() {
+    if (submit) {
+        submit = false;
+        //验证交易密码
+        $.ajax({
+            url: urlPost("order/check_pwd2"),
+            type: "POST",
+            dataType: "JSON",
+            data: { pwd2: $("#pwd2").val() },
+            success: function(res) {
+                console.log(res)
+                if (res.code == 0) {
+                    layer.open({
+                        type: 2,
+                        content: `{:lang('Order submission')}`,
+                        time: 2,
+                        shadeClose: false,
+                    });
+                    var timer = setTimeout(function() {
+                        $('.share').hide()
+                        $.ajax({
+                            url: urlPost("order/do_order"),
+                            type: "POST",
+                            dataType: "JSON",
+                            data: { oid: oid, add_id: add_id },
+                            success: function(res) {
+                                console.log(res)
+                                if (res.code == 0) {
+                                    QS_toast.show(`{:lang('Orders submitted successfully')}`, true);
+                                    var timer = setInterval(function() {
+                                        location.href = "{:url('rot_order/index')}"
+                                    }, 1800);
+                                }else{
+                                    if (res.code == 5) {
+                                        if(res.url){
+                                            var timer = setTimeout(function() {
+                                                location.href = res.url;
+                                            }, 800)
+                                        }
+                                    }
+                                }
+                                sumbit = true;
+                            },
+                            error: function(err) { console.log(err);
+                                sumbit = true; }
+                        })
+                    }, 2000)
+                } else {
+                    QS_toast.show(res.info, true)
+                    if(res.url){
+                        var timer = setTimeout(function() {
+                            location.href = res.url;
+                        }, 800)
+                    }
+                }
+            },
+            error: function(err) { console.log(err) }
+        })
+    }
+})
+</script>
+
+</html>

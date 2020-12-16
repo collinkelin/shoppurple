@@ -1,0 +1,209 @@
+{extend name='main'}
+{block name="button"}
+{if auth("add_users")}
+<button data-modal='{:url("add_users")}' data-title="添加会员" class='layui-btn'>添加会员</button>
+{/if}
+{/block}
+{block name="content"}
+<style type="text/css" media="screen">
+::-webkit-scrollbar {
+    width: 16px;
+    /*滚动条宽度*/
+    height: 16px;
+    /*滚动条高度*/
+}
+</style>
+<div class="think-box-shadow">
+    <fieldset>
+        <legend>条件搜索</legend>
+        <form class="layui-form layui-form-pane form-search" action="{:request()->url()}" onsubmit="return false" method="get" autocomplete="off">
+            <div class="layui-form-item">
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">用户名称</div>
+                    <div class="layui-input-inline">
+                        <input name="username" value="{$Think.get.username|default=''}" placeholder="请输入用户名称" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">注册时间</div>
+                    <div class="layui-input-inline">
+                        <input data-date-range name="addtime" value="{$Think.get.addtime|default=''}" placeholder="请选择注册时间" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">上级用户</div>
+                    <div class="layui-input-inline">
+                        <input name="parent" value="{$Think.get.parent|default=''}" placeholder="请输入上级用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">顶级用户</div>
+                    <div class="layui-input-inline">
+                        <input name="parent_first" value="{$Think.get.parent_first|default=''}" placeholder="请输入顶级用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">充提时间</div>
+                    <div class="layui-input-inline">
+                        <input data-date-range name="actiontime" value="{$Think.get.actiontime|default=''}" placeholder="请选择充提时间" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">排序类型</div>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <select name="sortKey">
+                            <option value="addtime" {eq name="Think.get.sortKey" value="addtime"}selected=""{/eq}>注册时间</option>
+                            <option value="id" {eq name="Think.get.sortKey" value="id"}selected=""{/eq}>用户ID</option>
+                            <option value="balance" {eq name="Think.get.sortKey" value="balance"}selected=""{/eq}>余额</option>
+                            <option value="freeze_balance" {eq name="Think.get.sortKey" value="freeze_balance"}selected=""{/eq}>冻结金额</option>
+                            <option value="recharge_total" {eq name="Think.get.sortKey" value="recharge_total"}selected=""{/eq}>总充值</option>
+                            <option value="deposit_total" {eq name="Think.get.sortKey" value="deposit_total"}selected=""{/eq}>总提现</option>
+                            <option value="childs" {eq name="Think.get.sortKey" value="childs"}selected=""{/eq}>邀请量</option>
+                            <option value="level" {eq name="Think.get.sortKey" value="level"}selected=""{/eq}>VIP</option>
+                            <option value="child_level" {eq name="Think.get.sortKey" value="child_level"}selected=""{/eq}>用户层级</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">排序方法</div>
+                    <div class="layui-input-inline" style="width: 130px;">
+                        <select name="sort">
+                            <option value="DESC" {eq name="Think.get.sort" value="DESC"}selected=""{/eq}>降序</option>
+                            <option value="ASC" {eq name="Think.get.sort" value="ASC"}selected=""{/eq}>升序</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-form-mid">余额大于等于</div>
+                    <div class="layui-input-inline">
+                        <input name="balance" value="{$Think.get.balance|default=0}" placeholder="请输入顶级用户名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-mid">
+                    <div class="layui-inline">
+                        <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i> 搜 索</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </fieldset>
+    <script>
+    form.render()
+    </script>
+    <fieldset>
+        充值:{$recharge} 提现:{$deposit} 总充值人数:{$counts}
+    </fieldset>
+    <table class="layui-table margin-top-15" lay-filter="tab" lay-skin="line">
+        {notempty name='list'}
+        <thead>
+            <tr>
+                <th lay-data="{field:'id',width:80}" class='text-left nowrap'>ID</th>
+                <th lay-data="{field:'username'}" class='text-left nowrap'>用户名</th>
+                <th lay-data="{field:'balance'}" class='text-left nowrap'>账户余额</th>
+                <th lay-data="{field:'freeze_balance'}" class='text-left nowrap'>冻结金额</th>
+                <th lay-data="{field:'recharge'}" class='text-left nowrap'>充值/提现</th>
+                <th lay-data="{field:'parent_name'}" class='text-left nowrap'>上级用户</th>
+                <th lay-data="{field:'parent_user'}" class='text-left nowrap'>顶级用户</th>
+                <th lay-data="{field:'invite_code'}" class='text-left'>邀请码(邀请量)</th>
+                <th lay-data="{field:'level',width:50}" class='text-left'>VIP</th>
+                <th lay-data="{field:'deal_special_count',width:50}" class='text-left'>特殊</th>
+                <th lay-data="{field:'addtime',width:168}" class='text-left nowrap'>注册时间</th>
+                <th lay-data="{field:'edit',width:430}" class='text-left'>操作</th>
+            </tr>
+        </thead>
+        {/notempty}
+        <tbody>
+            {foreach $list as $key=>$vo}
+            <tr>
+                <td class='text-left nowrap'>{$vo.id}</td>
+                <td class='text-left nowrap'><a href="/admin.html#/admin/users/index.html?spm=m-62-63-64&username={$vo.username}">{$vo.username}</a></td>
+                <td class='text-left nowrap'>{$vo.balance}</td>
+                <td class='text-left nowrap'>{$vo.freeze_balance}</td>
+                <td class='text-left nowrap'>{$vo.recharge_days} / <span style="color: #FF5909;">{$vo.deposit_days}</span></td>
+                <td class='text-left nowrap'>{if $vo.parent_id > 0}<a href="/admin.html#/admin/users/index.html?spm=m-62-63-64&username={:getUser($vo.parent_id)['username']}">{:getUser($vo.parent_id)['username']}</a>{/if}</td>
+                <td class='text-left nowrap'>{if $vo.parent_first > 0}<a href="/admin.html#/admin/users/index.html?spm=m-62-63-64&username={:getUser($vo.parent_first)['username']}">{:getUser($vo.parent_first)['username']}</a>{/if}</td>
+                <td class='text-left'>
+                    {$vo.invite_code}({if $vo.childs}
+                    <a style="color: #0963FF;" href="/admin.html#/admin/users/index.html?spm=m-62-63-64&parent={$vo.username}">{$vo.childs}</a>
+                    {else /}
+                    <span style="color: #FF1212;">{$vo.childs}</span>
+                    {/if})
+                </td>
+                <td class='text-left nowrap'>{$vo.level+1}</td>
+                <td class='text-left nowrap'>{$vo.deal_special_count}</td>
+                <td class='text-left nowrap'>
+                    {$vo.addtime|format_datetime}
+                </td>
+                <td class='text-left'>
+                    <a data-dbclick class="layui-btn layui-btn-xs" data-title="发送消息" data-modal='{:url("admin/users/sendmsg")}?uid={$vo.id}'>发送消息</a>
+                    {if auth("edit_users")}
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" onClick="cancel_special({$vo.id})" style='background:green;'>关闭任务</a>
+                    <!-- <a data-dbclick class="layui-btn layui-btn-xs layui-btn-danger" data-title="暗扣设置" data-modal='{:url("admin/users/edit_users_ankou")}?id={$vo.id}'>暗扣设置</a> -->
+                    <a data-dbclick class="layui-btn layui-btn-xs" data-title="编辑菜单" data-modal='{:url("admin/users/edit_users")}?id={$vo.id}'>编 辑</a>
+                    {if ($vo.status == 1) and auth("edit_users_status")}
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" data-action="{:url('edit_users_status',['status'=>2,'id'=>$vo.id])}" data-value="id#{$vo.id};status#2" style='background:red;'>禁用</a>
+                    {elseif ($vo.status == 2) and auth("edit_users_status") /}
+                    <a class="layui-btn layui-btn-xs layui-btn-warm" data-action="{:url('edit_users_status',['status'=>1,'id'=>$vo.id])}" data-value="id#{$vo.id};status#1" style='background:green;'>启用</a>
+                    {/if}
+                    <a class="layui-btn layui-btn-xs layui-btn" data-action="{:url('edit_users_ewm',['status'=>2,'id'=>$vo.id])}" data-value="id#{$vo.id};status#{$vo.invite_code}" style='background:red;'>刷新二维码</a>
+                    <a data-dbclick class="layui-btn layui-btn-xs" data-title="银行卡信息" data-modal='{:url("admin/users/edit_users_bk")}?id={$vo.id}'>银行卡</a>
+                    <a class="layui-btn layui-btn-xs layui-btn" onClick="del_user({$vo.id})" style='background:red;'>删除</a>
+                    {/if}
+                </td>
+            </tr>
+            {/foreach}
+        </tbody>
+    </table>
+    <script>
+    function cancel_special(id) {
+        layer.confirm("确认要取消任务吗，取消后不能恢复", { title: "取消确认" }, function(index) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('cancel_special')}",
+                data: {
+                    'id': id,
+                },
+                headers: {
+                    'User-Token-Csrf': "{:systoken('admin/users/cancel_special')}"
+                },
+                success: function(res) {
+                    layer.msg(res.info, { time: 2500 });
+                    location.reload();
+                }
+            });
+        }, function() {});
+    }
+    function del_user(id) {
+        layer.confirm("确认要删除吗，删除后不能恢复", { title: "删除确认" }, function(index) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('delete_user')}",
+                data: {
+                    'id': id,
+                },
+                headers: {
+                    'User-Token-Csrf': "{:systoken('admin/users/delete_user')}"
+                },
+                success: function(res) {
+                    layer.msg(res.info, { time: 2500 });
+                    location.reload();
+                }
+            });
+        }, function() {});
+    }
+    </script>
+    <script>
+    var table = layui.table;
+    //转换静态表格
+    var limit = Number('{$Think.get.limit}');
+    if (limit == 0) limit = 20;
+    table.init('tab', {
+        cellMinWidth: 120,
+        skin: 'line,row',
+        size: 'lg',
+        limit: limit
+    });
+    </script>
+    {empty name='list'}<span class="notdata">没有记录哦</span>{else}{$pagehtml|raw|default=''}{/empty}
+</div>
+{/block}

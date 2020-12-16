@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>添加语言</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="/static/plugins/layui/css/layui.css?v={:config('system.version')}" media="all" />
+</head>
+
+<body>
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">单行选择框</label>
+            <div class="layui-input-block">
+                <select name="type" lay-filter="type">
+                    <option value="1" selected="">网页显示</option>
+                    <option value="2">验证结果</option>
+                    <option value="3">验证变量翻译</option>
+                    <option value="11">后台显示</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容位置</label>
+            <div class="layui-input-block">
+                <input type="text" name="position" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">索引</label>
+            <div class="layui-input-block">
+                <input type="text" name="name" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">中文内容</label>
+            <div class="layui-input-block">
+                <textarea name="content[zh-cn]" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">日文内容</label>
+            <div class="layui-input-block">
+                <textarea name="content[ja-jp]" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">说明信息</label>
+            <div class="layui-input-block">
+                <textarea name="directions" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="forms">立即提交</button>
+            </div>
+        </div>
+    </form>
+    <table class="layui-table" id="lists" lay-filter="lists"></table>
+    <script src="/static/plugins/jquery-3.4.1/jquery-3.4.1.min.js?v={:config('system.version')}" charset="utf-8"></script>
+    <script src="/static/plugins/layui/layui.js?v={:config('system.version')}" charset="utf-8"></script>
+    <script>
+    layui.use(['form', 'layedit', 'laydate', 'table'], function() {
+        var form = layui.form,
+            layer = layui.layer,
+            layedit = layui.layedit,
+            laydate = layui.laydate;
+        var table = layui.table;
+
+        var tableIns = table.render({
+            elem: '#lists',
+            url: '/h5/index/ajax/',
+            cellMinWidth: 80,
+            cols: [
+                [
+                    { field: 'id', width: 80, title: 'ID' },
+                    { field: 'type', title: '用途' },
+                    { field: 'position', title: '内容位置' },
+                    { field: 'range', title: '语言' },
+                    { field: 'name', title: '语言索引' },
+                    { field: 'content', title: '内容文本' },
+                    { field: 'directions', title: '说明信息' },
+                ]
+            ]
+        });
+
+        //表单赋值
+        layui.$('#LAY-component-form-setval').on('click', function() {
+            form.val('example', {
+                "username": "贤心" // "name": "value"
+                    ,
+                "password": "123456",
+                "interest": 1,
+                "like[write]": true //复选框选中状态
+                    ,
+                "close": true //开关状态
+                    ,
+                "sex": "女",
+                "desc": "我爱 layui"
+            });
+        });
+        //监听提交
+        form.on('submit(forms)', function(data) {
+            loading = layer.load(1, { shade: [0.1, '#fff'] });
+            $.post("", data.field, function(res) {
+                layer.close(loading);
+                if (res.code == 1) {
+                    layer.msg(res.msg, { time: 1800, icon: 1 });
+                } else {
+                    layer.msg(res.msg, { time: 1800, icon: 2 });
+                }
+                tableIns.reload();
+                return false;
+            });
+            return false;
+        });
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function() {
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+        //监听单元格事件
+        table.on('tool(lists)', function(obj) {
+            var data = obj.data;
+            if (obj.event === 'setSign') {
+                layer.prompt({
+                    formType: 2,
+                    title: '修改 ID 为 [' + data.id + '] 的用户签名',
+                    value: data.sign
+                }, function(value, index) {
+                    layer.close(index);
+
+                    //这里一般是发送修改的Ajax请求
+
+                    //同步更新表格和缓存对应的值
+                    obj.update({
+                        sign: value
+                    });
+                });
+            }
+        });
+
+    });
+    </script>
+</body>
+
+</html>

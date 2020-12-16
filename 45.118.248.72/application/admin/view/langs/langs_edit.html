@@ -1,0 +1,33 @@
+{extend name='admin@main'}
+{block name="content"}
+<form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body think-box-shadow padding-left-40">
+        <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-col-xs9 relative">
+                <span class="color-green">选择语言</span>
+                <select name="range" id="selectList">
+                    {foreach $lang_list as $key=>$vo}
+                    <option value="{$key}" test {eq name="$info['range']" value="$key"}selected=""{/eq}>{$vo}</option>
+                    {/foreach}
+                </select>
+            </label>
+        </div>
+        <div class="layui-form-item layui-form-text block">
+            <span class="label-required-prev color-green">内容</span>
+            <textarea required placeholder="请输入内容" class="layui-textarea" name="content">{$info.content}</textarea>
+            <div class="layui-form-mid layui-word-aux">%s or %n$s:(n:数字) 不可更改,可变更位置</div>
+        </div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">确认编辑</button>
+            <button class="layui-btn layui-btn-danger" ng-click="hsitoryBack()" type="button">取消编辑</button>
+            <input type="hidden" name="id" value="{$info.id}">
+            <input type="hidden" name="_csrf_" value="{:systoken('admin/langs/langs_edit')}">
+        </div>
+    </div>
+</form>
+{/block}
+{block name='script'}
+<script>
+window.form.render();
+</script>
+{/block}

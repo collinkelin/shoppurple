@@ -1,0 +1,141 @@
+{extend name='admin@main'}
+{block name="content"}
+<form onsubmit="return false;" id="GoodsForm" data-auto="true" method="post" class='layui-form layui-card' autocomplete="off" lay-filter="form">
+    <div class="layui-card-body think-box-shadow padding-left-40">
+        <div class="layui-form-item">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-block">
+                <input name="name" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">标识</label>
+            <div class="layui-input-block">
+                <input name="name2" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <!-- <div class="layui-form-item layui-row layui-col-space15">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input type="hidden" name="ico" readonly>
+                {eq name="info.ico_type" value="1"}{$info.ico|raw}{else/}<img src="{$info.ico}" alt="" style="width: 50px;">{/eq}
+            </div>
+        </div> -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">最小额度</label>
+            <div class="layui-input-block">
+                <input type="number" name="min" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">最大额度</label>
+            <div class="layui-input-block">
+                <input type="number" name="max" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用于充值</label>
+            <div class="layui-input-block">
+                <input type="radio" name="recharge" value="1" title="是" checked="">
+                <input type="radio" name="recharge" value="0" title="否">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">充提方式</label>
+            <div class="layui-input-block">
+                <input type="radio" name="type" value="1" title="积分卷" checked="">
+                <input type="radio" name="type" value="0" title="普通">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">提现资料</label>
+            <div class="layui-input-block">
+                <input type="radio" name="withdrawal_user" value="1" title="需要" checked="">
+                <input type="radio" name="withdrawal_user" value="0" title="不需要">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">提现手续费</label>
+            <div class="layui-input-block">
+                <input type="number" name="handling_fee" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">收取方式</label>
+            <div class="layui-input-block">
+                <input type="radio" name="handling_fee_type" value="1" title="比例收取" checked="">
+                <input type="radio" name="handling_fee_type" value="0" title="定额收取">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">截止额度</label>
+            <div class="layui-input-block">
+                <input type="number" name="handling_fee_limit" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">时间范围</label>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input type="text" name="time_start" id="time_start" placeholder="HH:mm:ss" autocomplete="off" class="layui-input" readonly>
+                </div>
+                <div class="layui-form-mid">-</div>
+                <div class="layui-input-inline" style="width: 150px;">
+                    <input type="text" name="time_end" id="time_end" placeholder="HH:mm:ss" autocomplete="off" class="layui-input" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="1" title="启用" checked="">
+                <input type="radio" name="status" value="0" title="禁用">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">页面地址</label>
+            <div class="layui-input-block">
+                <input name="url" placeholder="请输入" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">附加说明</label>
+            <div class="layui-input-block">
+                <textarea name="description" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">充值第二页面附加说明</label>
+            <div class="layui-input-block">
+                <textarea name="nominee_description" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">充值第一页面附加说明</label>
+            <div class="layui-input-block">
+                <textarea name="name_description" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item text-center">
+            <input type="hidden" name="id">
+            <input type="hidden" name="_csrf_" value="{:systoken('admin/pay/edit')}">
+            <button class="layui-btn" type="submit">提交</button>
+            <button class="layui-btn layui-btn-danger" ng-click="hsitoryBack()" type="button">取消</button>
+        </div>
+    </div>
+</form>
+<script>
+    info = {:json_encode($info)};
+    window.form.val("form", info);
+    //日期
+    laydate.render({
+        elem: '#time_start',
+        type: 'time'
+    });
+    laydate.render({
+        elem: '#time_end',
+        type: 'time'
+    });
+    window.form.render();
+</script>
+{/block}

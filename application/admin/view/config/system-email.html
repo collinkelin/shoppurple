@@ -1,0 +1,45 @@
+<form onsubmit="return false" data-auto="true" action="{:url()}" method="post" class='layui-form layui-card' autocomplete="off">
+    <div class="layui-card-body padding-left-40">
+        <div class="layui-form-item">
+            <label class="layui-form-label required">邮箱服务器</label>
+            <div class="layui-input-block">
+                <input type="text" name="email_host" lay-reqtext="邮箱服务器地址不能为空" placeholder="请输入邮箱服务器" value="{:sysconf('email_host')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">邮箱协议</label>
+            <div class="layui-input-block">
+                <input type="text" name="email_secure" placeholder="请输入邮箱发送协议" value="{:sysconf('email_secure')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">邮箱端口</label>
+            <div class="layui-input-block">
+                <input type="text" name="email_port" lay-reqtext="端口不能为空" placeholder="请输入邮箱端口" value="{:sysconf('email_port')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">邮箱地址</label>
+            <div class="layui-input-block">
+                <input type="text" name="email_addr" lay-reqtext="邮箱地址不能为空" placeholder="请输入邮箱地址" value="{:sysconf('email_addr')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">发件人邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email_id" placeholder="请输入邮箱用户名" value="{:sysconf('email_id')}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required">邮箱密码</label>
+            <div class="layui-input-block">
+                <input type="text" name="email_pass" placeholder="请输入邮箱密码" value="{:sysconf('email_pass')}" class="layui-input">
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        <div class="layui-form-item text-center">
+            <button class="layui-btn" type="submit">保存配置</button>
+            <button class="layui-btn layui-btn-danger" type='button' data-confirm="确定要取消修改吗？" data-close>取消修改</button>
+        </div>
+    </div>
+</form>

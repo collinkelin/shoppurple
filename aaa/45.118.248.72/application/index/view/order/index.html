@@ -1,0 +1,214 @@
+{extend name='index@main'}
+{block name='css'}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/res/common/css/hui.min.css__VER__">
+{/block}
+{block name='style'}
+<style>
+body {
+    background: #fff;
+}
+
+nav {
+    position: fixed;
+    top: 2rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-width: 750px;
+    width: 100%;
+    background: white;
+    display: flex;
+    height: 2rem;
+    line-height: 2rem;
+    justify-content: space-between;
+    flex-direction: row;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.nav_active {
+    color: #E60816;
+    border-bottom: 1px solid #E60816;
+}
+
+nav>p {
+    width: 33%;
+    text-align: center;
+}
+
+.cont>div {
+    display: none;
+}
+
+.list {
+    overflow-y: scroll;
+}
+
+.list>li {
+    font-size: .5rem;
+    border-bottom: .1rem solid rgb(248, 242, 242);
+    padding: .5rem 1rem;
+}
+
+.order_info {
+    margin-top: .5rem;
+    display: flex;
+}
+
+.info_img {
+    width: 3rem;
+    height: 3rem;
+    background: #eeeeee;
+}
+
+.info_data {
+    max-width: 55%;
+    margin: 0 0 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.info_store,
+.money {
+    color: #00bcd4;
+}
+
+.info_money {
+    margin-left: auto;
+    text-align: right;
+}
+
+.no-data {
+    border: none !important;
+    text-align: center;
+}
+
+.info_name,
+.order_num {
+    color: #000;
+    font-size: 13px
+}
+
+.info_name,
+.info_store,
+.money {
+    font-size: 12px
+}
+</style>
+{/block}
+{block name="main"}
+<header class="hui-header">
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Acquisition List')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container mescroll" style="padding: 3rem 0;" id="mescroll">
+        <nav>
+            <p data-type="1" class="nav_active">{:lang('Pending')}</p>
+            <p data-type="2">{:lang('Frozen')}</p>
+            <p data-type="3">{:lang('Completed')}</p>
+        </nav>
+        <div class="cont">
+            <div style="display: block;">
+                <ul class="list"></ul>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/html" id="list-tpl">
+{{ for(var key in it.data) { }}
+<li id="{{= it.data[key].id }}" data-url="{{= it.data[key].infourl }}">
+    <div class="order_num">{{= it.data[key].id }}</div>
+    <div class="order_info">
+        <div class="info_img"><img src="{{= it.data[key].goods_pic }}" alt=""></div>
+        <div class="info_data">
+            <p class="info_name">{{= it.data[key].goods_name }}</p>
+            <p class="info_store">{{= it.data[key].shop_name }}</p>
+            <p class="info_store">{:lang('Order timed out')}:{{= timeTransform(it.data[key].endtime) }}</p>
+        </div>
+        <div class="info_money">
+            <p class="money" style="margin-bottom: .5rem;">￥{{= milliFormat(it.data[key].goods_price) }}</p>
+            <p class="money" style="margin-bottom: .5rem;color:#00d44b">￥{{= milliFormat(it.data[key].commission) }}</p>
+            <p>x<span class="info_num">{{= it.data[key].goods_count }}</span></p>
+        </div>
+    </div>
+</li>
+{{  } }}
+</script>
+{/block}
+{block name='script'}
+{include file="public/floor" /}
+<script>
+var page = 1,
+    fpage = 1,
+    mpage = 1,
+    fcont = 0,
+    mcont = 0;
+var type = 1;
+$(function() {
+    $('#hui-footer a').eq(1).addClass("floor-active")
+    type = $('nav>p').eq(0).data('type');
+    wait(page, type);
+});
+
+$(window).scroll(function() {
+    var scroH = $(document).scrollTop();
+    var viewH = $(window).height();
+    var contentH = $(document).height();
+    if (scroH > 100) {
+
+    }
+    if (contentH - (scroH + viewH) <= 10) {
+        page++;
+        wait(page, type);
+    }
+    if (contentH = (scroH + viewH)) {
+
+    }
+});
+
+// tab
+$('nav>p').click(function() {
+    var _ind = $(this).index();
+    type = $(this).data('type');
+    page = 1;
+    $(this).addClass("nav_active").siblings().removeClass("nav_active");
+    $(".list").html('');
+    wait(page, type);
+});
+
+$(".list").on('click', 'li', function(e) {
+    console.log($(this));
+    location.href = $(this).data('url');
+});
+
+function wait(page, type) {
+    $.ajax({
+        url: urlPost("order/order_list"),
+        type: "POST",
+        dataType: "JSON",
+        data: { page: page, type: type },
+        success: function(res) {
+            console.log(res);
+            if (res.code == 0) {
+                var list = res.data;
+                if (page != 1 && list.length == 0) {
+                    QS_toast.show(`{:lang('No more data')}..`, true)
+                }
+                if (page == 1 && list.length == 0) {
+                    $(".list").append(`<li class="no-data">{:lang('No data')}...</li>`)
+                }
+                var tpl1 = doT.template($("#list-tpl").html());
+                $('.list').append(tpl1(res));
+            }
+        },
+        error: function(err) { console.log(err) }
+    })
+}
+</script>
+{/block}

@@ -1,0 +1,88 @@
+{extend name='index@main'}
+{block name='style'}
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.w100,
+.w100 * {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+}
+
+.item {
+    display: flex;
+}
+.hui-media-list li{
+    margin: 20px 10px;
+    margin-bottom: 0px;
+    background-color: #eee;
+    border-radius: 8px;
+    background-image: linear-gradient(45deg,#a5c8ff,#9078FF);
+    box-shadow: 0 3px 12px #2196F3;
+    padding: 10px;
+}
+.hui-media-list .title{
+    font-size: 20px;
+    height: 40px;
+    line-height: 40px;
+}
+.hui-media-list .button span{
+    display: block;
+    border-radius: 20px;
+    background-image: linear-gradient(to right,#cb86f9,#8324f8);
+    background-color: #8324f8;
+    margin: 10px 20%;
+    margin-bottom: 0;
+    font-size: 20px;
+    width: 60%;
+    height: 40px;
+    line-height: 40px;
+}
+</style>
+{/block}
+{block name="main"}
+<header>
+    <a class="back" href="javascript:history.go(-1);">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+    <span>{:lang('Mobile phone binding')}</span>
+    <a class="back" href="/">
+        <i class="fa fa-home" aria-hidden="true"></i>
+    </a>
+</header>
+<section>
+    <div class="container">
+        <div class="hui-media-list" style="padding-top:1px;">
+            <ul>
+                {foreach $list as $key=>$vo}
+                <li>
+                    <div class="w100 title">{$vo.title}</div>
+                    <div class="w100 item">
+                        <div>
+                            <div class="item-title">价格</div>
+                            <div class="item-value">{$vo.price}</div>
+                        </div>
+                        <div>
+                            <div class="item-title">每日收益</div>
+                            <div class="item-value">{$vo.income}</div>
+                        </div>
+                    </div>
+                    <div class="w100 button">
+                        <span>前往购买</span>
+                    </div>
+                </li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+</section>
+{/block}
+{block name='script'}
+<script>
+</script>
+{/block}

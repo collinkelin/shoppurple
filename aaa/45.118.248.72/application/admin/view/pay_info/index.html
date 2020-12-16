@@ -1,0 +1,314 @@
+{extend name='main'}
+{block name="content"}
+<div class="think-box-shadow">
+    <table class="layui-tab table-data" lay-filter="list"></table>
+</div>
+<script type="text/html" id="toolbar">
+    <div class="layui-btn-container">
+        {if auth("add")}<button class="layui-btn layui-btn-sm" lay-event="add">添加</button>{/if}
+    </div>
+</script>
+<script type="text/html" id="action">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">{:lang('edit')}</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">{:lang('del')}</a>
+</script>
+<script type="text/html" id="info">
+    <form class="layui-form" lay-filter="info" style="margin:0 10px;margin-top: 10px;">
+        <div class="layui-form-item">
+                <label class="layui-form-label">支付类型</label>
+            <div class="layui-input-block">
+                <select name="payid" id="selectList">
+                    {foreach $pay as $key=>$vo}
+                    <option value="{$vo.id}" test class="">{$vo.name}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">银行名</label>
+            <div class="layui-input-block">
+                <input name="bank_name" class="layui-input" placeholder="请输入银行名" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">支行名</label>
+            <div class="layui-input-block">
+                <input name="branch_name" class="layui-input" placeholder="请输入支行名" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">支行编号</label>
+            <div class="layui-input-block">
+                <input name="branch_number" class="layui-input" placeholder="请输入支行编号" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">银行卡号</label>
+            <div class="layui-input-block">
+                <input name="card_number" required class="layui-input" placeholder="请输入银行卡号" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">姓名</label>
+            <div class="layui-input-block">
+                <input name="name_e" class="layui-input" placeholder="请输入姓名" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">姓名汉字</label>
+            <div class="layui-input-block">
+                <input name="name" class="layui-input" placeholder="请输入姓名汉字" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">电话号码</label>
+            <div class="layui-input-block">
+                <input name="phone" class="layui-input" placeholder="请输入电话号码" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">最小金额</label>
+            <div class="layui-input-block">
+                <input name="min" class="layui-input" placeholder="请输入最小金额" value="">
+            </label>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">最大金额</label>
+            <div class="layui-input-block">
+                <input name="max" class="layui-input" placeholder="请输入最大金额" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">默认选择</label>
+            <div class="layui-input-block">
+                <input type="radio" name="default" value="0" title="否" checked="">
+                <input type="radio" name="default" value="1" title="是">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">二维码</label>
+            <div class="layui-input-block">
+                <div class="layui-upload-drag" id="test10">
+                    <i class="layui-icon"></i>
+                    <p>点击上传，或将文件拖拽到此处</p>
+                    <div class="layui-hide" id="uploadDemoView">
+                        <hr>
+                        <img src="" alt="上传成功后渲染" style="max-width: 196px">
+                    </div>
+                    <div class="layui-progress layui-progress-big" lay-showpercent="true" lay-filter="update-photo">
+                        <div class="layui-progress-bar" lay-percent="0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">附加说明</label>
+            <div class="layui-input-block">
+                <textarea name="description" placeholder="请输入内容" id="layui-textarea" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="submit" class="layui-btn" lay-submit="" lay-filter="submit">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <input type="hidden" name="id" value="0" />
+            </div>
+        </div>
+    </form>
+</script>
+<script type="text/html" id="cancel">
+    {{ d.cancel ? '是' : '否' }}
+</script>
+<script type="text/html" id="min">
+    {{ formatNumber(d.min) }}
+</script>
+<script type="text/html" id="max">
+    {{ formatNumber(d.max) }}
+</script>
+<script>
+var table = layui.table;
+var form = layui.form;
+var layedit = layui.layedit;
+var upload = layui.upload;
+var element = layui.element;
+$('[name="qrcode"]').uploadMultipleImage();
+// var where = {};
+// form.val('search-form', where);
+// form.render();
+var tableIn = table.render({
+    elem: '.table-data',
+    url: '{:url("")}',
+    method: 'post',
+    // totalRow: true,
+    toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
+    defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+        title: '提示',
+        layEvent: 'LAYTABLE_TIPS',
+        icon: 'layui-icon-tips'
+    }],
+    cols: [
+        [
+            { field: 'id', title: 'ID', width: 80, fixed: true, sort: true, totalRowText: '合计行', },
+            { field: 'pay_name', title: '支付类型', },
+            { field: 'bank_name', title: '银行名', },
+            { field: 'branch_name', title: '支行名', },
+            { field: 'branch_number', title: '支行编号', },
+            { field: 'card_number', title: '银行卡号', },
+            { field: 'name_e', title: '姓名英文', },
+            { field: 'name', title: '姓名汉字', },
+            { field: 'phone', title: '电话号码', },
+            { field: 'min', title: '最小充值', templet: 'min', },
+            { field: 'max', title: '最大充值', templet: 'max', },
+            { field: 'qrcode', title: '二维码', },
+            { field: 'default', title: '默认', },
+            { field: 'status', title: '状态', },
+            { field: 'initial', title: '金额', },
+            { field: 'cancel', title: '允许撤单', totalRow: true, templet: '#cancel', },
+            { title: '操作', toolbar: '#action', align: "left", width: 110, },
+        ]
+    ],
+    id: 'tableData',
+    limits: [10, 15, 20, 25, 50, 100],
+    limit: 15,
+    page: true,
+    // where: form.val("search-form")
+});
+
+//头工具栏事件
+table.on('toolbar(list)', function(obj) {
+    // var checkStatus = table.checkStatus(obj.config.id);
+    var data = obj.data;
+    switch (obj.event) {
+        case 'add':
+            info = data;
+            layer.open({
+                title: '添加',
+                type: 1,
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                area: ['650px', 'auto'],
+                shadeClose: true, //开启遮罩关闭
+                content: $('#info').html(),
+                cancel: function(index, layero) {
+                    info = {};
+                    return false;
+                },
+                end: function(index, layero) {
+                    info = {};
+                    return false;
+                }
+            });
+            // form.val("info", info);
+            form.render();
+            break;
+    };
+});
+
+table.on('tool(list)', function(obj) {
+    var data = obj.data;
+    console.log(obj.event);
+    switch (obj.event) {
+        case 'del':
+            layer.confirm('{:lang("Are you sure you want to delete it")}', function(index) {
+                loading = layer.load(1, { shade: [0.1, '#fff'] });
+                $.post("{:url('delete')}", { id: data.id }, function(res) {
+                    layer.close(loading);
+                    layer.close(index);
+                    if (res.code == 1) {
+                        layer.msg(res.msg, { time: 1000, icon: 1 });
+                        obj.del();
+                    } else {
+                        layer.msg(res.msg, { time: 1000, icon: 2 });
+                    }
+                });
+            });
+            break;
+        case 'edit':
+            info = data;
+            layer.open({
+                title: '编辑',
+                type: 1,
+                closeBtn: 0, //不显示关闭按钮
+                anim: 2,
+                area: ['650px', 'auto'],
+                shadeClose: true, //开启遮罩关闭
+                content: $('#info').html(),
+                cancel: function(index, layero) {
+                    info = {};
+                    return false;
+                },
+                end: function(index, layero) {
+                    info = {};
+                    return false;
+                }
+            });
+            form.val("info", info);
+            layedit.build('layui-textarea', {
+                tool: [
+                    'strong', //加粗
+                    'italic', //斜体
+                    'underline', //下划线
+                    'del', //删除线
+                    '|', //分割线
+                    'left', //左对齐
+                    'center', //居中对齐
+                    'right', //右对齐
+                    // 'link', //超链接
+                    // 'unlink', //清除链接
+                    // 'face', //表情
+                    // 'image', //插入图片
+                    // 'help', //帮助
+                ]
+            }); //建立编辑器
+            //拖拽上传
+            upload.render({
+                elem: '#test10',
+                url: '/admin?s=admin/api.plugs/upload', //改成您自己的上传接口
+                progress: function(n, elem) {
+                    var percent = n + '%' //获取进度百分比
+                    element.progress('update-photo', percent); //可配合 layui 进度条元素使用
+                },
+                done: function(res) {
+                    layer.msg('上传成功');
+                    layui.$('#uploadDemoView').removeClass('layui-hide').find('img').attr('src', res.info.url);
+                    console.log(res)
+                }
+            });
+            form.render();
+            break;
+    }
+});
+
+function reload() {
+    //执行重载
+    table.reload('tableData', {
+        page: {
+            curr: 1 //重新从第 1 页开始
+        },
+        // where: form.val("search-form"),
+    }, 'data');
+}
+
+form.on('submit(submit)', function(data) {
+    loading = layer.load(1, { shade: [0.1, '#fff'] });
+    $.ajax({
+        type: 'POST',
+        url: "{:url('save')}",
+        data: data.field,
+        beforeSend: function(request) {
+            request.setRequestHeader("User-Token-Csrf", "{:systoken('admin/convey_match/save')}");
+        },
+        success: function(res) {
+            if (res.code == 1) {
+                layer.msg(res.info, { time: 1800, icon: 1 });
+            } else {
+                layer.msg(res.info, { time: 1800, icon: 2 });
+            }
+            layer.close(loading);
+            reload();
+        }
+    });
+    return false;
+});
+</script>
+{/block}
